@@ -1,0 +1,9 @@
+.images-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image {
+  display: block;
+  max-height: 300px;
+}
