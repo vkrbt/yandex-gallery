@@ -8,70 +8,81 @@ export interface Props {
 export interface State {
 }
 
+const alingImagesByWidth = (imageRows: HTMLDivElement[][], parent: HTMLDivElement) => {
+  imageRows.forEach((row) => {
+    const imagesWidth: number = row.reduce(
+      (sumWidth: number, image: HTMLDivElement) => {
+        return sumWidth + image.offsetWidth;
+      },
+      0,
+    );
+    const rowWidth: number = parent.offsetWidth;
+    const scaleIndex: number = rowWidth / imagesWidth;
+    row.forEach((image: HTMLDivElement) => {
+      const height: number = image.offsetHeight;
+      const newMaxHeight = `${Math.floor(height * scaleIndex)}px`;
+      image.style.flexGrow = `${scaleIndex}`;
+      image.style.maxHeight = newMaxHeight;
+      const firstChild = image.firstChild as HTMLElement;
+      firstChild.style.maxHeight = newMaxHeight;
+    });
+  });
+};
+
 export default class Gallery extends React.Component<Props, State> {
-  images: HTMLImageElement[] = [];
-  imageRows: HTMLImageElement[][] = [];
+  images: HTMLDivElement[] = [];
+  imagesConatiner: HTMLDivElement;
 
   constructor(props: Props) {
     super(props);
     this.sortImagesByRows = this.sortImagesByRows.bind(this);
-    this.alingImagesByWidth = this.alingImagesByWidth.bind(this);
+    this.setParentRef = this.setParentRef.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('load', this.sortImagesByRows);
+    window.addEventListener('resize', this.sortImagesByRows);
   }
 
-  setRef(position: number) {
-    return (element: HTMLImageElement) => {
-      this.images[position] = element;
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.sortImagesByRows);
+  }
+
+  setImageRefs(position: number) {
+    return (image: HTMLDivElement) => {
+      this.images[position] = image;
     };
   }
 
-  alingImagesByWidth() {
-    this.imageRows.forEach((row) => {
-      const parent: HTMLElement | null = row[0].parentElement as HTMLElement;
-      const imagesWidth: number = row.reduce(
-        (sumWidth: number, image: HTMLImageElement) => {
-          return sumWidth + image.offsetWidth;
-        },
-        0,
-      );
-      const rowWidth: number = parent.offsetWidth;
-      const scaleIndex: number = rowWidth / imagesWidth;
-      row.forEach((image: HTMLImageElement) => {
-        const height = image.offsetHeight;
-        const width = image.offsetWidth;
-        image.style.height = `${height * scaleIndex}px`;
-        image.style.width = `${width * scaleIndex}px`;
-        image.style.maxHeight = 'none';
-      });
-    });
+  setParentRef(imageConatiner: HTMLDivElement) {
+    this.imagesConatiner = imageConatiner;
   }
 
   sortImagesByRows() {
-    this.imageRows.push([this.images[0]]);
+    const imageRows: HTMLDivElement[][] = [[this.images[0]]];
     this.images.shift();
 
-    this.images.forEach((image: HTMLImageElement, i: number) => {
-      const lastRow: HTMLImageElement[] = this.imageRows[this.imageRows.length - 1];
-      const lastImage: HTMLImageElement = lastRow[lastRow.length - 1];
+    this.images.forEach((image: HTMLDivElement, i: number) => {
+      const lastRow: HTMLDivElement[] = imageRows[imageRows.length - 1];
+      const lastImage: HTMLDivElement = lastRow[lastRow.length - 1];
       if (image.offsetTop === lastImage.offsetTop) {
         lastRow.push(image);
       } else {
-        this.imageRows.push([image]);
+        imageRows.push([image]);
       }
     });
     window.removeEventListener('load', this.sortImagesByRows);
-    this.alingImagesByWidth();
+    alingImagesByWidth(imageRows, this.imagesConatiner);
   }
 
   render() {
     return (
-      <div className="images-container">
+      <div ref={this.setParentRef} className="images-container">
         {images.map((image, i) => (
-          <img ref={this.setRef(i)} className="image" key={image} src={image} />)
-        )}
+          <div key={image} className="image-container" ref={this.setImageRefs(i)}>
+            <img className="image" src={image} />
+          </div>
+        ))}
       </div>
     );
   }

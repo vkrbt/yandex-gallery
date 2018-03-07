@@ -1,9 +1,19 @@
 .images-container {
   display: flex;
+  flex-direction: row;
+  flex-grow: 1;
   flex-wrap: wrap;
+}
+
+.image-container {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  box-sizing: border-box;
+  max-height: 150px;
 }
 
 .image {
   display: block;
-  max-height: 300px;
+  max-height: 150px;
 }
