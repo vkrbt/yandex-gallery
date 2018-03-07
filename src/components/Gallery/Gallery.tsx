@@ -20,8 +20,7 @@ const alingImagesByWidth = (imageRows: HTMLDivElement[][], parent: HTMLDivElemen
     const scaleIndex: number = rowWidth / imagesWidth;
     row.forEach((image: HTMLDivElement) => {
       const height: number = image.offsetHeight;
-      const newMaxHeight = `${Math.floor(height * scaleIndex)}px`;
-      image.style.flexGrow = `${scaleIndex}`;
+      const newMaxHeight = `${height * scaleIndex}px`;
       image.style.maxHeight = newMaxHeight;
       const firstChild = image.firstChild as HTMLElement;
       firstChild.style.maxHeight = newMaxHeight;
@@ -41,7 +40,6 @@ export default class Gallery extends React.Component<Props, State> {
 
   componentDidMount() {
     window.addEventListener('load', this.sortImagesByRows);
-    window.addEventListener('resize', this.sortImagesByRows);
   }
 
   componentWillUnmount() {
@@ -59,10 +57,11 @@ export default class Gallery extends React.Component<Props, State> {
   }
 
   sortImagesByRows() {
-    const imageRows: HTMLDivElement[][] = [[this.images[0]]];
-    this.images.shift();
+    const localImageRefs: HTMLDivElement[] = [...this.images];
+    const imageRows: HTMLDivElement[][] = [[localImageRefs[0]]];
+    localImageRefs.shift();
 
-    this.images.forEach((image: HTMLDivElement, i: number) => {
+    localImageRefs.forEach((image: HTMLDivElement, i: number) => {
       const lastRow: HTMLDivElement[] = imageRows[imageRows.length - 1];
       const lastImage: HTMLDivElement = lastRow[lastRow.length - 1];
       if (image.offsetTop === lastImage.offsetTop) {
@@ -72,6 +71,7 @@ export default class Gallery extends React.Component<Props, State> {
       }
     });
     window.removeEventListener('load', this.sortImagesByRows);
+    window.addEventListener('resize', this.sortImagesByRows);
     alingImagesByWidth(imageRows, this.imagesConatiner);
   }
 
