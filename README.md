@@ -1,5 +1,15 @@
-## Yandex homework galery
+# Yandex homework galery
 
-> npm i/yarn
->
-> npm start/yarn start
+## To lauch the project run
+
+```
+npm i
+npm start
+```
+
+or
+
+```
+yarn
+yarn start
+```
