@@ -3,9 +3,9 @@ import Gallery from './components/Gallery/Gallery';
 import images from './components/Gallery/images';
 
 const App = () => (
-  <div>
+  <React.Fragment>
     <Gallery images={images} />
-  </div>
+  </React.Fragment>
 );
 
 export default App;
