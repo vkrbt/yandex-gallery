@@ -1,8 +1,10 @@
 import React from 'react';
+import Gallery from './components/Gallery/Gallery';
+import images from './components/Gallery/images';
 
 const App = () => (
   <div>
-    123
+    <Gallery images={images} />
   </div>
 );
 
