@@ -1,0 +1,26 @@
+.gallery {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  &::after {
+    flex-grow: 9999;
+
+    content: '';
+  }
+}
+.image-tile {
+  overflow: hidden;
+  flex-grow: 1;
+
+  height: 200px;
+  &__image {
+    display: block;
+    flex-grow: 1;
+
+    min-width: 100%;
+    max-width: 100%;
+    height: inherit;
+
+    object-fit: cover;
+  }
+}
