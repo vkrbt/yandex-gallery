@@ -1,24 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
+import Preview from '../Preview/Preview';
 
 class Gallery extends PureComponent {
   constructor() {
     super();
     this.state = {
-      isModalOpened: false,
+      currentImageId: null,
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.createModalRef = this.createModalRef.bind(this);
   }
 
-  handleOpenModal() {
-    this.modal.handleOpen();
-  }
+  handleOpenModal = image => () => {
+    this.setState({ currentImageId: image.id }, this.modal.handleOpen);
+  };
 
   createModalRef(modal) {
     this.modal = modal;
   }
+
   render() {
     return (
       <div className="gallery">
@@ -28,13 +30,15 @@ class Gallery extends PureComponent {
             tabIndex="0"
             key={image.id}
             className="image-tile"
-            onClick={this.handleOpenModal}
-            onKeyPress={this.handleOpenModal}
+            onClick={this.handleOpenModal(image)}
+            onKeyPress={this.handleOpenModal(image)}
           >
             <img className="image-tile__image" src={image.src} alt="" />
           </div>
         ))}
-        <Modal ref={this.createModalRef} isOpen={this.state.isModalOpened}>123</Modal>
+        <Modal ref={this.createModalRef}>
+          <Preview images={this.props.images} currentId={this.state.currentImageId} />
+        </Modal>
       </div>
     );
   }
@@ -43,8 +47,8 @@ class Gallery extends PureComponent {
 Gallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
-      src: PropTypes.string,
+      id: PropTypes.number.isRequired,
+      src: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };
