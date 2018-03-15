@@ -12,7 +12,8 @@
 
   padding: 3rem;
 
-  transition: 0.2s ease-out;
+  transition-timing-function: ease-out;
+  transition-duration: 0;
 
   will-change: transform, opacity, padding;
   touch-action: none;
@@ -33,9 +34,9 @@
 
 .cross {
   position: absolute;
+  z-index: 9;
   top: 0;
   right: 0;
-  z-index: 9;
 
   width: 3rem;
   height: 3rem;
@@ -47,25 +48,26 @@
   opacity: 0.6;
   color: #fff;
 
-  will-change: opacity;
   font-size: 3rem;
 
-  @media screen and (max-width: 768px) {
-    font-size: 1rem;
+  will-change: opacity, top, right, width, height, background-color, padding, border-radius, color;
 
+  @media screen and (max-width: 768px) {
     top: 0.5rem;
     right: 0.5rem;
 
     width: 2rem;
     height: 2rem;
+    padding: 0.5rem;
 
     color: #111;
     border-radius: 50%;
     background-color: #fff;
-    padding: 0.5rem;
+
+    font-size: 1rem;
   }
   &::after {
-    content: '✕';
+    content: '\2715';
   }
   &:hover {
     opacity: 1;

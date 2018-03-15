@@ -32,23 +32,29 @@ class Modal extends PureComponent {
     const currentSwipePosY = e.touches[0].clientY;
     const swipeProgress = 1 - Math.abs(currentSwipePosY - this.swipeStartY) / this.overlay.clientHeight;
 
-    this.overlay.style.transform = `translateY(${currentSwipePosY - this.swipeStartY}px) scale(${swipeProgress})`;
+    this.overlay.style.transform = `translateY(${currentSwipePosY - this.swipeStartY}px)`;
     this.overlay.style.opacity = `${swipeProgress}`;
     [this.lastTouch] = e.touches;
   }
 
   handleTouchEnd() {
+    const transitionDuration = 300;
     if (!this.lastTouch) {
       return;
     }
-    if (Math.abs(this.swipeStartY - this.lastTouch.clientY) > this.overlay.clientHeight / 3) {
+    if (Math.abs(this.swipeStartY - this.lastTouch.clientY) > this.overlay.clientHeight / 4) {
       const scrollDirection = this.swipeStartY - this.lastTouch.clientY > 0 ? '-' : '';
-      this.overlay.style.transform = `translateY(${scrollDirection}100%) scale(0)`;
       this.overlay.style.opacity = '0';
-      setTimeout(this.handleClose, 200);
+      this.overlay.style.transitionDuration = `${transitionDuration}ms`;
+      this.overlay.style.transform = `translateY(${scrollDirection}100%)`;
+      setTimeout(this.handleClose, transitionDuration);
     } else {
       this.overlay.style.opacity = '1';
-      this.overlay.style.transform = 'translateY(0) scale(1)';
+      this.overlay.style.transitionDuration = `${transitionDuration}ms`;
+      this.overlay.style.transform = 'translateY(0)';
+      setTimeout(() => {
+        this.overlay.style.transitionDuration = '0ms';
+      }, transitionDuration);
     }
   }
 
