@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import Preview from '../Preview/Preview';
+import ImageTile from '../ImageTile/ImageTile';
 
 class Gallery extends PureComponent {
   constructor() {
@@ -13,7 +14,7 @@ class Gallery extends PureComponent {
     this.createModalRef = this.createModalRef.bind(this);
   }
 
-  handleOpenModal = image => () => {
+  handleOpenModal(image) {
     this.setState({ currentImageId: image.id }, this.modal.handleOpen);
   };
 
@@ -25,16 +26,7 @@ class Gallery extends PureComponent {
     return (
       <div className="gallery">
         {this.props.images.map(image => (
-          <div
-            role="button"
-            tabIndex="0"
-            key={image.id}
-            className="image-tile"
-            onClick={this.handleOpenModal(image)}
-            onKeyPress={this.handleOpenModal(image)}
-          >
-            <img className="image-tile__image" src={image.src} alt="" />
-          </div>
+          <ImageTile key={image.id} image={image} handleSelect={this.handleOpenModal} />
         ))}
         <Modal ref={this.createModalRef}>
           <Preview images={this.props.images} currentId={this.state.currentImageId} />

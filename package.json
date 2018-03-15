@@ -100,5 +100,6 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "homepage": "https://vkrbt.github.io/yandex-homework"
 }
