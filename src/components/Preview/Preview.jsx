@@ -19,6 +19,10 @@ class Preview extends PureComponent {
     this.handlePrevImage = this.handlePrevImage.bind(this);
     this.handleNextImage = this.handleNextImage.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
+    this.handleTouchStart = this.handleTouchStart.bind(this);
+    this.handleTouchMove = this.handleTouchMove.bind(this);
+    this.handleTouchEnd = this.handleTouchEnd.bind(this);
+    this.createTrackRef = this.createTrackRef.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +75,46 @@ class Preview extends PureComponent {
     }
   }
 
+  handleTouchStart(e) {
+    [this.firstTouch] = e.touches;
+  }
+
+  handleTouchMove(e) {
+    const [currentTouch] = e.touches;
+    this.lastTouch = currentTouch;
+    if (this.touchIsVertical) {
+      e.stopPropagation();
+      e.preventDefault();
+      const translatePosition = currentTouch.clientX - this.firstTouch.clientX;
+      this.track.style.transform = `translateX(${translatePosition}px)`;
+      return;
+    }
+    const horizontalDistance = Math.abs(currentTouch.clientX - this.firstTouch.clientX);
+    const verticalDistance = Math.abs(currentTouch.clientY - this.firstTouch.clientY);
+    if (verticalDistance < horizontalDistance) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.touchIsVertical = true;
+    }
+  }
+
+  handleTouchEnd() {
+    this.track.style.transform = `translateX(0)`;
+    if (this.lastTouch) {
+      this.touchIsVertical = false;
+      if (this.lastTouch.clientX - this.firstTouch.clientX > 100) {
+        this.handlePrevImage();
+      }
+      if (this.lastTouch.clientX - this.firstTouch.clientX < -100) {
+        this.handleNextImage();
+      }
+    }
+  }
+
+  createTrackRef(track) {
+    this.track = track;
+  }
+
   render() {
     const currentImage = this.state.imagePos !== null ? this.props.images[this.state.imagePos] : null;
     const { isPrevImageExist, isNextImageExist } = this.state;
@@ -79,8 +123,25 @@ class Preview extends PureComponent {
         {isPrevImageExist ? (
           <button className="preview__control preview__control_prev" onClick={this.handlePrevImage} />
         ) : null}
-        <div className="preview__track">
+        <div
+          className="preview__track"
+          onTouchStart={this.handleTouchStart}
+          onTouchMove={this.handleTouchMove}
+          onTouchEnd={this.handleTouchEnd}
+          onTouchCancel={this.handleTouchEnd}
+          ref={this.createTrackRef}
+        >
+          {isPrevImageExist ? (
+            <div className="preview__image-wrapper_prev">
+              <img className="preview__image_prev" src={this.props.images[this.state.imagePos - 1].src} alt="" />
+            </div>
+          ) : null}
           {currentImage ? <img className="preview__image" src={currentImage.src} alt="" /> : null}
+          {isNextImageExist ? (
+            <div className="preview__image-wrapper_next">
+              <img className="preview__image_next" src={this.props.images[this.state.imagePos + 1].src} alt="" />
+            </div>
+          ) : null}
         </div>
         {isNextImageExist ? (
           <button className="preview__control preview__control_next" onClick={this.handleNextImage} />

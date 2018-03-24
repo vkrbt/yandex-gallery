@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
+const body = document.getElementsByTagName('body')[0];
+
 class Modal extends PureComponent {
   constructor() {
     super();
@@ -25,11 +27,13 @@ class Modal extends PureComponent {
 
   handleOpen() {
     document.addEventListener('keydown', this.handleEscKeypress);
+    body.classList.add('body--modal-is-opened');
     this.setState({ isOpened: true });
   }
 
   handleClose() {
     document.removeEventListener('keydown', this.handleEscKeypress);
+    body.classList.remove('body--modal-is-opened');
     this.setState({ isOpened: false });
   }
 
@@ -84,8 +88,8 @@ class Modal extends PureComponent {
     this.lastTouch = null;
   }
 
-  createOverlayRef(everlay) {
-    this.overlay = everlay;
+  createOverlayRef(overlay) {
+    this.overlay = overlay;
   }
 
   render() {
@@ -104,11 +108,7 @@ class Modal extends PureComponent {
         ref={this.createOverlayRef}
       >
         {/* eslint-disable jsx-a11y/no-static-element-interactions */}
-        <div
-          onClick={this.handleCloseWithAnimation}
-          onKeyPress={this.handleCloseKeyPress}
-          className="modal-shadow"
-        />
+        <div onClick={this.handleCloseWithAnimation} onKeyPress={this.handleCloseKeyPress} className="modal-shadow" />
         {/* eslint-enable jsx-a11y/no-static-element-interactions */}
         <div
           tabIndex="0"

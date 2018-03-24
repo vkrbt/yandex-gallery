@@ -7,20 +7,11 @@ $bp_landscape_mobile: 768px;
   overflow-y: auto;
   flex-direction: row;
   flex-wrap: wrap;
-
-  max-height: 100%;
   padding-bottom: $tile-padding;
   padding-left: $tile-padding;
   &::after {
     flex-grow: 9999;
 
     content: '';
-  }
-
-  @media screen and (max-width: $bp_landscape_mobile) and (orientation: landscape) {
-    flex-wrap: nowrap;
-
-    max-width: 100%;
-    height: 100vh;
   }
 }

@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import Preview from '../Preview/Preview';
-import ImageTile from '../ImageTile/ImageTile';
+import Images from '../Images/Images';
+import images from './images';
 
 class Gallery extends PureComponent {
   constructor() {
@@ -16,7 +16,7 @@ class Gallery extends PureComponent {
 
   handleOpenModal(image) {
     this.setState({ currentImageId: image.id }, this.modal.handleOpen);
-  };
+  }
 
   createModalRef(modal) {
     this.modal = modal;
@@ -25,24 +25,13 @@ class Gallery extends PureComponent {
   render() {
     return (
       <div className="gallery">
-        {this.props.images.map(image => (
-          <ImageTile key={image.id} image={image} handleSelect={this.handleOpenModal} />
-        ))}
+        <Images images={images} handleSelect={this.handleOpenModal} />
         <Modal ref={this.createModalRef}>
-          <Preview images={this.props.images} currentId={this.state.currentImageId} />
+          <Preview images={images} currentId={this.state.currentImageId} />
         </Modal>
       </div>
     );
   }
 }
-
-Gallery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      src: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-};
 
 export default Gallery;
