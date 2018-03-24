@@ -1,0 +1,11 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "function-paren-newline": 0,
+    "react/require-default-props": 0
+  }
+}
