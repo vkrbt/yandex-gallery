@@ -4,11 +4,18 @@ import ReactDOM from 'react-dom';
 
 const body = document.getElementsByTagName('body')[0];
 
+const defaultState = {
+  transitionDuration: 0,
+  opacity: 1,
+  transform: 'translateY(0)',
+};
+
 class Modal extends PureComponent {
   constructor() {
     super();
     this.state = {
       isOpened: false,
+      ...defaultState,
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -28,7 +35,7 @@ class Modal extends PureComponent {
   handleOpen() {
     document.addEventListener('keydown', this.handleEscKeypress);
     body.classList.add('body--modal-is-opened');
-    this.setState({ isOpened: true });
+    this.setState({ isOpened: true, ...defaultState });
   }
 
   handleClose() {
@@ -50,9 +57,11 @@ class Modal extends PureComponent {
   }
 
   handleCloseWithAnimation(e, direction = '') {
-    this.overlay.style.transitionDuration = `${this.props.transitionDuration}ms`;
-    this.overlay.style.transform = `translateY(${direction}100%)`;
-    this.overlay.style.opacity = '0';
+    this.setState({
+      transitionDuration: `${this.props.transitionDuration}ms`,
+      transform: `translateY(${direction}100%)`,
+      opacity: 0,
+    });
     setTimeout(this.handleClose, this.props.transitionDuration);
   }
 
@@ -69,9 +78,10 @@ class Modal extends PureComponent {
       e.stopPropagation();
       e.preventDefault();
       const swipeProgress = 1 - Math.abs(currentTouch.clientY - this.firstTouch.clientY) / this.overlay.clientHeight;
-
-      this.overlay.style.transform = `translateY(${currentTouch.clientY - this.firstTouch.clientY}px)`;
-      this.overlay.style.opacity = `${swipeProgress}`;
+      this.setState({
+        transform: `translateY(${currentTouch.clientY - this.swipeStartY}px)`,
+        opacity: swipeProgress,
+      });
       [this.lastTouch] = e.touches;
       return;
     }
@@ -94,11 +104,15 @@ class Modal extends PureComponent {
       this.overlay.style.opacity = '0';
       this.handleCloseWithAnimation(e, scrollDirection);
     } else {
-      this.overlay.style.opacity = '1';
-      this.overlay.style.transitionDuration = `${this.props.transitionDuration}ms`;
-      this.overlay.style.transform = 'translateY(0)';
+      this.setState({
+        opacity: 1,
+        transitionDuration: `${this.props.transitionDuration}ms`,
+        transform: 'translateY(0)',
+      });
       setTimeout(() => {
-        this.overlay.style.transitionDuration = '0ms';
+        this.setState({
+          transitionDuration: '0ms',
+        });
       }, this.props.transitionDuration);
     }
     this.lastTouch = null;
@@ -112,6 +126,8 @@ class Modal extends PureComponent {
     if (!this.state.isOpened) {
       return null;
     }
+    const { transitionDuration, opacity, transform } = this.state;
+    const overlayStyle = { transitionDuration, opacity, transform };
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
     return ReactDOM.createPortal(
       <div
@@ -122,6 +138,7 @@ class Modal extends PureComponent {
         onTouchEnd={this.handleTouchEnd}
         onTouchCancel={this.handleTouchEnd}
         ref={this.createOverlayRef}
+        style={overlayStyle}
       >
         {/* eslint-disable jsx-a11y/no-static-element-interactions */}
         <div onClick={this.handleCloseWithAnimation} onKeyPress={this.handleCloseKeyPress} className="modal-shadow" />
