@@ -1,11 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
+const defaultState = {
+  transform: 'translateX(0)',
+  transitionDuration: 0,
+}
 class Preview extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       imagePos: null,
+      ...defaultState,
     };
     const imagePos = props.images.findIndex(image => props.currentId === image.id);
     const isPrevImageExist = !!this.props.images[imagePos - 1];
@@ -22,6 +27,7 @@ class Preview extends PureComponent {
     this.handleTouchStart = this.handleTouchStart.bind(this);
     this.handleTouchMove = this.handleTouchMove.bind(this);
     this.handleTouchEnd = this.handleTouchEnd.bind(this);
+    this.handleImageNotChanged = this.handleImageNotChanged.bind(this);
     this.createTrackRef = this.createTrackRef.bind(this);
   }
 
@@ -57,10 +63,19 @@ class Preview extends PureComponent {
     if (this.props.images[this.state.imagePos - 1]) {
       const isPrevImageExist = !!this.props.images[this.state.imagePos - 2];
       this.setState({
-        isPrevImageExist,
-        imagePos: this.state.imagePos - 1,
-        isNextImageExist: true,
+        transitionDuration: this.props.transitionDuration,
+        transform: `translateX(100%)`,
       });
+      setTimeout(() => {
+        this.setState({
+          isPrevImageExist,
+          imagePos: this.state.imagePos - 1,
+          isNextImageExist: true,
+          ...defaultState,
+        });
+      }, this.props.transitionDuration);
+    } else {
+      this.handleImageNotChanged();
     }
   }
 
@@ -68,11 +83,32 @@ class Preview extends PureComponent {
     if (this.props.images[this.state.imagePos + 1]) {
       const isNextImageExist = !!this.props.images[this.state.imagePos + 2];
       this.setState({
-        isPrevImageExist: true,
-        imagePos: this.state.imagePos + 1,
-        isNextImageExist,
+        transitionDuration: this.props.transitionDuration,
+        transform: `translateX(-100%)`,
       });
+      setTimeout(() => {
+        this.setState({
+          isPrevImageExist: true,
+          imagePos: this.state.imagePos + 1,
+          isNextImageExist,
+          ...defaultState
+        });
+      }, this.props.transitionDuration);
+    } else {
+      this.handleImageNotChanged();
     }
+  }
+
+  handleImageNotChanged() {
+    this.setState({
+      transitionDuration: this.props.transitionDuration,
+      transform: `translateX(0)`,
+    });
+    setTimeout(() => {
+      this.setState({
+        transitionDuration: 0,
+      });
+    }, this.props.transitionDuration);
   }
 
   handleTouchStart(e) {
@@ -86,7 +122,9 @@ class Preview extends PureComponent {
       e.stopPropagation();
       e.preventDefault();
       const translatePosition = currentTouch.clientX - this.firstTouch.clientX;
-      this.track.style.transform = `translateX(${translatePosition}px)`;
+      this.setState({
+        transform: `translateX(${translatePosition}px)`,
+      });
       return;
     }
     const horizontalDistance = Math.abs(currentTouch.clientX - this.firstTouch.clientX);
@@ -99,16 +137,20 @@ class Preview extends PureComponent {
   }
 
   handleTouchEnd() {
-    this.track.style.transform = `translateX(0)`;
     if (this.lastTouch) {
       this.touchIsVertical = false;
-      if (this.lastTouch.clientX - this.firstTouch.clientX > 100) {
-        this.handlePrevImage();
-      }
-      if (this.lastTouch.clientX - this.firstTouch.clientX < -100) {
-        this.handleNextImage();
+      const shouldImageBeChanged = Math.abs(this.firstTouch.clientX - this.lastTouch.clientX) > 100;
+      if (shouldImageBeChanged) {
+        if (this.firstTouch.clientX < this.lastTouch.clientX) {
+          this.handlePrevImage();
+        } else {
+          this.handleNextImage();
+        }
+      } else {
+        this.handleImageNotChanged();
       }
     }
+    this.lastTouch = null;
   }
 
   createTrackRef(track) {
@@ -117,7 +159,8 @@ class Preview extends PureComponent {
 
   render() {
     const currentImage = this.state.imagePos !== null ? this.props.images[this.state.imagePos] : null;
-    const { isPrevImageExist, isNextImageExist } = this.state;
+    const { isPrevImageExist, isNextImageExist, transform, transitionDuration } = this.state;
+    const trackStyle = { transitionDuration: `${transitionDuration}ms`, transform };
     return (
       <div className="preview">
         {isPrevImageExist ? (
@@ -130,6 +173,7 @@ class Preview extends PureComponent {
           onTouchEnd={this.handleTouchEnd}
           onTouchCancel={this.handleTouchEnd}
           ref={this.createTrackRef}
+          style={trackStyle}
         >
           {isPrevImageExist ? (
             <div className="preview__image-wrapper_prev">
@@ -151,6 +195,10 @@ class Preview extends PureComponent {
   }
 }
 
+Preview.defaultProps = {
+  transitionDuration: 200,
+};
+
 Preview.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
@@ -159,6 +207,7 @@ Preview.propTypes = {
     }),
   ).isRequired,
   currentId: PropTypes.number,
+  transitionDuration: PropTypes.number,
 };
 
 export default Preview;
