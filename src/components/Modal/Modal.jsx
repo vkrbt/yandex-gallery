@@ -57,24 +57,37 @@ class Modal extends PureComponent {
   }
 
   handleTouchStart(e) {
-    this.swipeStartY = e.touches[0].clientY;
+    [this.firstTouch] = e.touches;
   }
 
   handleTouchMove(e) {
-    const currentSwipePosY = e.touches[0].clientY;
-    const swipeProgress = 1 - Math.abs(currentSwipePosY - this.swipeStartY) / this.overlay.clientHeight;
+    const currentTouch = e.touches[0];
+    if (this.swipeIsHorizontal) {
+      e.stopPropagation();
+      e.preventDefault();
+      const swipeProgress = 1 - Math.abs(currentTouch.clientY - this.firstTouch.clientY) / this.overlay.clientHeight;
 
-    this.overlay.style.transform = `translateY(${currentSwipePosY - this.swipeStartY}px)`;
-    this.overlay.style.opacity = `${swipeProgress}`;
-    [this.lastTouch] = e.touches;
+      this.overlay.style.transform = `translateY(${currentTouch.clientY - this.firstTouch.clientY}px)`;
+      this.overlay.style.opacity = `${swipeProgress}`;
+      [this.lastTouch] = e.touches;
+      return;
+    }
+    const horizontalDistance = Math.abs(currentTouch.clientX - this.firstTouch.clientX);
+    const verticalDistance = Math.abs(currentTouch.clientY - this.firstTouch.clientY);
+    if (verticalDistance > horizontalDistance) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.swipeIsHorizontal = true;
+    }
+    this.lastTouch = null;
   }
 
   handleTouchEnd(e) {
     if (!this.lastTouch) {
       return;
     }
-    if (Math.abs(this.swipeStartY - this.lastTouch.clientY) > this.overlay.clientHeight / 4) {
-      const scrollDirection = this.swipeStartY - this.lastTouch.clientY > 0 ? '-' : '';
+    if (Math.abs(this.firstTouch.clientY - this.lastTouch.clientY) > this.overlay.clientHeight / 4) {
+      const scrollDirection = this.firstTouch.clientY - this.lastTouch.clientY > 0 ? '-' : '';
       this.overlay.style.opacity = '0';
       this.handleCloseWithAnimation(e, scrollDirection);
     } else {
