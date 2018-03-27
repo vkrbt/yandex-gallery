@@ -7,22 +7,21 @@ class ImageTile extends PureComponent {
 
     this.state = {
       isLoaded: false,
+      isError: false,
     };
 
     this.image = null;
 
     this.handleImageLoad = this.handleImageLoad.bind(this);
+    this.handleImageError = this.handleImageError.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
   componentDidMount() {
     this.image = new Image();
     this.image.addEventListener('load', this.handleImageLoad);
+    this.image.addEventListener('error', this.handleImageError);
     this.image.src = this.props.image.src;
-  }
-
-  componentWillUnmount() {
-    this.image.removeEventListener('load', this.handleImageLoad);
   }
 
   handleImageLoad() {
@@ -31,14 +30,29 @@ class ImageTile extends PureComponent {
     });
   }
 
+  handleImageError() {
+    this.setState({
+      isError: true,
+    });
+  }
+
   handleSelect() {
     this.props.handleSelect(this.props.image);
   }
 
   render() {
-    return this.state.isLoaded ? (
-      <div role="button" tabIndex="0" className="image-tile" onClick={this.handleSelect} onKeyPress={this.handleSelect}>
-        <img className="image-tile__image" src={this.image.src} alt="" />
+    const { isError, isLoaded } = this.state;
+    return !isError ? (
+      <div
+        role="button"
+        tabIndex="0"
+        className={`image-tile${isLoaded ? ' image-tile_loaded' : ''}`}
+        onClick={this.handleSelect}
+        onKeyPress={this.handleSelect}
+      >
+        {
+          isLoaded ? <img className="image-tile__image" src={this.image.src} alt="" /> : null
+        }
       </div>
     ) : null;
   }

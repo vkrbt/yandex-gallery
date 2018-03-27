@@ -12,8 +12,16 @@
   padding-left: 0;
 
   cursor: pointer;
+  transition: 0.2s ease-out;
+  transform: scale(0);
 
+  opacity: 0;
   outline: none;
+  &_loaded {
+    transform: scale(1);
+
+    opacity: 1;
+  }
   &::after {
     position: absolute;
     top: $tile-padding;
