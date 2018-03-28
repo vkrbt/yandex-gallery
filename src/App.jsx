@@ -1,10 +1,8 @@
 import React from 'react';
-import Gallery from './components/Gallery/Gallery';
+import GalleryContainer from './components/Gallery/GalleryContainer';
 
 const App = () => (
-  <React.Fragment>
-    <Gallery />
-  </React.Fragment>
+  <GalleryContainer />
 );
 
 export default App;

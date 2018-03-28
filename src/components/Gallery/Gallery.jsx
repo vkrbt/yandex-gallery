@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import Preview from '../Preview/Preview';
 import Images from '../Images/Images';
@@ -12,6 +13,10 @@ class Gallery extends PureComponent {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.createModalRef = this.createModalRef.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getPhotosList();
   }
 
   handleOpenModal(image) {
@@ -33,5 +38,9 @@ class Gallery extends PureComponent {
     );
   }
 }
+
+Gallery.propTypes = {
+  getPhotosList: PropTypes.func.isRequired,
+};
 
 export default Gallery;
