@@ -28,10 +28,7 @@ class InfiniteScroll extends Component {
       const maxScroll = e.target.documentElement.offsetHeight - windowHeight;
       if (currentScroll + windowHeight > maxScroll) {
         this.setState({ loading: true });
-        this.props
-          .getNext()
-          .then(this.handleLoadingEnd)
-          .catch(this.handleLoadingEnd);
+        this.props.getNext().finnaly(this.handleLoadingEnd);
       }
     }
   }

@@ -61,7 +61,10 @@ class Modal extends PureComponent {
   }
 
   handleTouchMove(e) {
-    const currentTouch = e.touches[0];
+    const [currentTouch] = e.touches;
+    if (!currentTouch) {
+      return;
+    }
     if (this.swipeIsHorizontal) {
       e.stopPropagation();
       e.preventDefault();
