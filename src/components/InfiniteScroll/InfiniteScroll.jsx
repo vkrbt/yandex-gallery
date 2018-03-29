@@ -9,6 +9,7 @@ class InfiniteScroll extends Component {
       loading: false,
     };
     this.handleScrollEnd = this.handleScrollEnd.bind(this);
+    this.handleLoadingEnd = this.handleLoadingEnd.bind(this);
   }
 
   componentDidMount() {
@@ -25,14 +26,20 @@ class InfiniteScroll extends Component {
       const windowHeight = window.innerHeight;
       const currentScroll = e.target.documentElement.scrollTop;
       const maxScroll = e.target.documentElement.offsetHeight - windowHeight;
-      if (currentScroll === maxScroll) {
+      if (currentScroll + windowHeight > maxScroll) {
         this.setState({ loading: true });
-        this.props.getNext().then(() => {
-          this.setState({ loading: false });
-        });
+        this.props
+          .getNext()
+          .then(this.handleEndLoading)
+          .catch(this.handleLoadingEnd);
       }
     }
   }
+
+  handleLoadingEnd() {
+    this.setState({ loading: false });
+  }
+
   render() {
     return (
       <div>

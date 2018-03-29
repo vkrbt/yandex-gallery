@@ -45,21 +45,15 @@ class ImageTile extends PureComponent {
         role="button"
         tabIndex="0"
         className="image-tile"
-        style={{ backgroundColor: this.props.image.color ,flexBasis: this.state.width, height: this.props.tileHeight }}
+        style={{ backgroundColor: this.props.image.color }}
         onClick={this.handleSelect}
         onKeyPress={this.handleSelect}
       >
-        {
-          isLoaded ? <img className="image-tile__image" src={this.image.src} alt="" /> : null
-        }
+        {isLoaded ? <img className="image-tile__image" src={this.image.src} alt="" /> : null}
       </div>
     ) : null;
   }
 }
-
-ImageTile.defaultProps = {
-  tileHeight: 200,
-};
 
 ImageTile.propTypes = {
   image: PropTypes.shape({
@@ -73,7 +67,6 @@ ImageTile.propTypes = {
     }).isRequired,
   }).isRequired,
   handleSelect: PropTypes.func.isRequired,
-  tileHeight: PropTypes.number,
 };
 
 export default ImageTile;
