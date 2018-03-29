@@ -1,6 +1,5 @@
 $control_bg_color: #333;
 $control_bg_opacity: 0.7;
-
 .preview {
   position: relative;
 
@@ -10,7 +9,6 @@ $control_bg_opacity: 0.7;
   height: 100%;
 
   outline: none;
-
   &__track {
     position: relative;
 
@@ -64,8 +62,6 @@ $control_bg_opacity: 0.7;
 
     opacity: 0;
     outline: none;
-
-    will-change: opacity;
     @media screen and (max-width: 768px) {
       display: none;
     }
@@ -95,7 +91,6 @@ $control_bg_opacity: 0.7;
       left: 0;
 
       background: linear-gradient(-90deg, rgba($control_bg_color, 0), rgba($control_bg_color, $control_bg_opacity));
-
       &::after {
         top: 50%;
         left: 50%;
@@ -107,7 +102,6 @@ $control_bg_opacity: 0.7;
       right: 0;
 
       background: linear-gradient(90deg, rgba($control_bg_color, 0), rgba($control_bg_color, $control_bg_opacity));
-
       &::after {
         top: 50%;
         right: 50%;

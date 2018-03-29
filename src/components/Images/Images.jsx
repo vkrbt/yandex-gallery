@@ -2,15 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImageTile from '../ImageTile/ImageTile';
 
-const Images = props => props.images.map(image => <ImageTile key={image.id} image={image} {...props} />);
+const Images = props => (
+  <div className="images">{props.images.map(image => <ImageTile key={image.id} image={image} {...props} />)}</div>
+);
 
 Images.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      src: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  images: PropTypes.array.isRequired, // eslint-disable-line react/forbid-prop-types
 };
 
 export default Images;

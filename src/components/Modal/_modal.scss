@@ -15,7 +15,6 @@
   transition-timing-function: ease-out;
   transition-duration: 0ms;
 
-  will-change: transform, opacity, padding;
   touch-action: none;
   @media screen and (max-width: 768px) {
     padding: 0;
@@ -49,9 +48,6 @@
   color: #fff;
 
   font-size: 3rem;
-
-  will-change: opacity, top, right, width, height, background-color, padding, border-radius, color;
-
   @media screen and (max-width: 768px) {
     top: 0.5rem;
     right: 0.5rem;

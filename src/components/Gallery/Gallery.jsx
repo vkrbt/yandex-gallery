@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from '../Modal/Modal';
 import Preview from '../Preview/Preview';
 import Images from '../Images/Images';
-import images from './images';
+import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
 
 class Gallery extends PureComponent {
   constructor() {
@@ -13,10 +13,6 @@ class Gallery extends PureComponent {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.createModalRef = this.createModalRef.bind(this);
-  }
-
-  componentDidMount() {
-    this.props.getPhotosList();
   }
 
   handleOpenModal(image) {
@@ -29,18 +25,23 @@ class Gallery extends PureComponent {
 
   render() {
     return (
-      <div className="gallery">
-        <Images images={images} handleSelect={this.handleOpenModal} />
+      <React.Fragment>
+        <InfiniteScroll getNext={this.props.getNextPhotos}>
+          <Images images={this.props.images.items} handleSelect={this.handleOpenModal} />
+        </InfiniteScroll>
         <Modal ref={this.createModalRef}>
-          <Preview images={images} currentId={this.state.currentImageId} />
+          <Preview images={this.props.images.items} currentId={this.state.currentImageId} />
         </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 Gallery.propTypes = {
-  getPhotosList: PropTypes.func.isRequired,
+  images: PropTypes.shape({
+    items: PropTypes.array.isRequired,
+  }),
+  getNextPhotos: PropTypes.func.isRequired,
 };
 
 export default Gallery;

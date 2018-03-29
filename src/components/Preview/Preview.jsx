@@ -35,17 +35,6 @@ class Preview extends PureComponent {
     document.addEventListener('keydown', this.handleKeyUp);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const imagePos = nextProps.images.findIndex(image => nextProps.currentId === image.id);
-    const isPrevImageExist = !!this.props.images[imagePos - 1];
-    const isNextImageExist = !!this.props.images[imagePos + 1];
-    this.setState({
-      isPrevImageExist,
-      imagePos,
-      isNextImageExist,
-    });
-  }
-
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyUp);
   }
@@ -177,13 +166,13 @@ class Preview extends PureComponent {
         >
           {isPrevImageExist ? (
             <div className="preview__image-wrapper_prev">
-              <img className="preview__image_prev" src={this.props.images[this.state.imagePos - 1].src} alt="" />
+              <img className="preview__image_prev" src={this.props.images[this.state.imagePos - 1].urls.regular} alt="" />
             </div>
           ) : null}
-          {currentImage ? <img className="preview__image" src={currentImage.src} alt="" /> : null}
+          {currentImage ? <img className="preview__image" src={currentImage.urls.regular} alt="" /> : null}
           {isNextImageExist ? (
             <div className="preview__image-wrapper_next">
-              <img className="preview__image_next" src={this.props.images[this.state.imagePos + 1].src} alt="" />
+              <img className="preview__image_next" src={this.props.images[this.state.imagePos + 1].urls.regular} alt="" />
             </div>
           ) : null}
         </div>
@@ -202,11 +191,12 @@ Preview.defaultProps = {
 Preview.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      src: PropTypes.string.isRequired,
-    }),
+      urls: PropTypes.shape({
+        regular: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
   ).isRequired,
-  currentId: PropTypes.number,
+  currentId: PropTypes.string,
   transitionDuration: PropTypes.number,
 };
 

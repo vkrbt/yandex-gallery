@@ -2,8 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 class ImageTile extends PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       isLoaded: false,
@@ -15,13 +15,11 @@ class ImageTile extends PureComponent {
     this.handleImageLoad = this.handleImageLoad.bind(this);
     this.handleImageError = this.handleImageError.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-  }
 
-  componentDidMount() {
     this.image = new Image();
     this.image.addEventListener('load', this.handleImageLoad);
     this.image.addEventListener('error', this.handleImageError);
-    this.image.src = this.props.image.src;
+    this.image.src = this.props.image.urls.small;
   }
 
   handleImageLoad() {
@@ -46,7 +44,8 @@ class ImageTile extends PureComponent {
       <div
         role="button"
         tabIndex="0"
-        className={`image-tile${isLoaded ? ' image-tile_loaded' : ''}`}
+        className="image-tile"
+        style={{ backgroundColor: this.props.image.color ,flexBasis: this.state.width, height: this.props.tileHeight }}
         onClick={this.handleSelect}
         onKeyPress={this.handleSelect}
       >
@@ -58,12 +57,23 @@ class ImageTile extends PureComponent {
   }
 }
 
+ImageTile.defaultProps = {
+  tileHeight: 200,
+};
+
 ImageTile.propTypes = {
   image: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    src: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    color: PropTypes.string.isRequired,
+    urls: PropTypes.shape({
+      small: PropTypes.string.isRequired,
+      regular: PropTypes.string.isRequired,
+    }).isRequired,
   }).isRequired,
   handleSelect: PropTypes.func.isRequired,
+  tileHeight: PropTypes.number,
 };
 
 export default ImageTile;

@@ -1,31 +1,24 @@
+
+$bp_portrait_mobile: 480px;
+$bp_landscape_mobile: 768px;
+
 .image-tile {
   position: relative;
 
   overflow: hidden;
   flex-grow: 1;
 
-  height: 200px;
-  height: calc(150px + 5vh);
-  min-height: calc(150px + 5vh);
-  padding: $tile-padding;
-  padding-bottom: 0;
-  padding-left: 0;
+  margin: $tile-padding;
+  margin-bottom: 0;
+  margin-left: 0;
 
   cursor: pointer;
-  transition: 0.2s ease-out;
-  transform: scale(0);
 
-  opacity: 0;
   outline: none;
-  &_loaded {
-    transform: scale(1);
-
-    opacity: 1;
-  }
   &::after {
     position: absolute;
-    top: $tile-padding;
-    right: $tile-padding;
+    top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
 
@@ -34,8 +27,6 @@
 
     opacity: 0;
     background-color: #000;
-
-    will-change: opacity;
   }
   &:hover,
   &:focus {

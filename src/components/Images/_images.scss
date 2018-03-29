@@ -1,8 +1,6 @@
 $tile-padding: 5px;
-$bp_portrait_mobile: 480px;
-$bp_landscape_mobile: 768px;
 
-.gallery {
+.images {
   display: flex;
   overflow-y: auto;
   flex-direction: row;
