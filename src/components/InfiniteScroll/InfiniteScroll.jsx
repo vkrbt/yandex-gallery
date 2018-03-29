@@ -30,7 +30,7 @@ class InfiniteScroll extends Component {
         this.setState({ loading: true });
         this.props
           .getNext()
-          .then(this.handleEndLoading)
+          .then(this.handleLoadingEnd)
           .catch(this.handleLoadingEnd);
       }
     }
