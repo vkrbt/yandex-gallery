@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import classnames from 'classnames';
+import { Button } from '../Button/Button';
 
 export class ScrollToTopButton extends PureComponent {
   constructor() {
@@ -40,6 +41,6 @@ export class ScrollToTopButton extends PureComponent {
       'to-top--showed': this.state.isShowed || this.state.lastScroll,
       'to-top--to-bottom': this.state.lastScroll,
     });
-    return <button className={classNames} onClick={this.handleScrollClick} />;
+    return <Button className={classNames} onClick={this.handleScrollClick} />;
   }
 }
