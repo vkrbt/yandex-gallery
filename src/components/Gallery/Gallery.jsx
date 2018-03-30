@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from '../Modal/Modal';
 import { Preview } from '../Preview/Preview';
-import { ImagesList } from '../ImagesList/Images';
+import { ImagesList } from '../ImagesList/ImagesList';
 import { InfiniteScroll } from '../InfiniteScroll/InfiniteScroll';
 
 export class Gallery extends PureComponent {

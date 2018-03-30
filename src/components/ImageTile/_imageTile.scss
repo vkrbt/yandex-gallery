@@ -44,9 +44,4 @@
 
     object-fit: cover;
   }
-  @media screen and (max-width: $bp_portrait_mobile) and (orientation: portrait) {
-    flex-basis: 100%!important;
-
-    height: auto!important;
-  }
 }

@@ -65,7 +65,7 @@ $control_bg_opacity: 0.7;
     @media screen and (max-width: 768px) {
       display: none;
     }
-    @media (pointer: coarse) and (min-width: 768px) {
+    @media (min-width: 768px) {
       display: block;
 
       opacity: 0.5;

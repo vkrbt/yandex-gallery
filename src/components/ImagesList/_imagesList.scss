@@ -11,7 +11,4 @@
 
     content: '';
   }
-  @media (max-width: $bp_portrait_mobile) {
-    flex-direction: column;
-  }
 }
