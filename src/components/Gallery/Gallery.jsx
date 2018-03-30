@@ -30,7 +30,11 @@ export class Gallery extends PureComponent {
           <ImagesList images={this.props.images.items} handleSelect={this.handleOpenModal} />
         </InfiniteScroll>
         <Modal ref={this.createModalRef}>
-          <Preview images={this.props.images.items} currentId={this.state.currentImageId} />
+          <Preview
+            getNext={this.props.getNextPhotos}
+            images={this.props.images.items}
+            currentId={this.state.currentImageId}
+          />
         </Modal>
       </React.Fragment>
     );

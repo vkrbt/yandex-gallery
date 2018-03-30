@@ -56,7 +56,8 @@ export class Preview extends PureComponent {
         transitionDuration: this.props.transitionDuration,
         transform: `translateX(100%)`,
       });
-      setTimeout(() => {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = setTimeout(() => {
         this.setState({
           isPrevImageExist,
           imagePos: this.state.imagePos - 1,
@@ -70,13 +71,17 @@ export class Preview extends PureComponent {
   }
 
   handleNextImage() {
+    if (this.state.imagePos + 2 === this.props.images.length) {
+      this.props.getNext();
+    }
     if (this.props.images[this.state.imagePos + 1]) {
       const isNextImageExist = !!this.props.images[this.state.imagePos + 2];
       this.setState({
         transitionDuration: this.props.transitionDuration,
         transform: `translateX(-100%)`,
       });
-      setTimeout(() => {
+      clearTimeout(this.timeoutId);
+      this.timeoutId = setTimeout(() => {
         this.setState({
           isPrevImageExist: true,
           imagePos: this.state.imagePos + 1,
@@ -94,7 +99,8 @@ export class Preview extends PureComponent {
       transitionDuration: this.props.transitionDuration,
       transform: `translateX(0)`,
     });
-    setTimeout(() => {
+    clearTimeout(this.timeoutId);
+    this.timeoutId = setTimeout(() => {
       this.setState({
         transitionDuration: 0,
       });
@@ -199,4 +205,5 @@ Preview.propTypes = {
   ).isRequired,
   currentId: PropTypes.string,
   transitionDuration: PropTypes.number,
+  getNext: PropTypes.func.isRequired,
 };
