@@ -1,34 +1,35 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Spinner from '../Spinner/Spinner';
+import { Spinner } from '../Spinner/Spinner';
+import { ScrollToTopButton } from '../ScrollToTopButton/ScrollToTopButton';
 
-class InfiniteScroll extends Component {
+export class InfiniteScroll extends PureComponent {
   constructor() {
     super();
     this.state = {
       loading: false,
     };
-    this.handleScrollEnd = this.handleScrollEnd.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
     this.handleLoadingEnd = this.handleLoadingEnd.bind(this);
+    this.handleGetNext = this.handleGetNext.bind(this);
   }
 
   componentDidMount() {
-    this.props.getNext();
-    document.addEventListener('scroll', this.handleScrollEnd);
+    this.handleGetNext();
+    document.addEventListener('scroll', this.handleScroll);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('scroll', this.handleScrollEnd);
+    document.removeEventListener('scroll', this.handleScroll);
   }
 
-  handleScrollEnd(e) {
+  handleScroll(e) {
+    const windowHeight = window.innerHeight;
+    const currentScroll = e.target.documentElement.scrollTop;
     if (!this.state.loading) {
-      const windowHeight = window.innerHeight;
-      const currentScroll = e.target.documentElement.scrollTop;
       const maxScroll = e.target.documentElement.offsetHeight - windowHeight;
       if (currentScroll + windowHeight > maxScroll) {
-        this.setState({ loading: true });
-        this.props.getNext().finally(this.handleLoadingEnd);
+        this.handleGetNext();
       }
     }
   }
@@ -37,11 +38,17 @@ class InfiniteScroll extends Component {
     this.setState({ loading: false });
   }
 
+  handleGetNext() {
+    this.setState({ loading: true });
+    this.props.getNext().finally(this.handleLoadingEnd);
+  }
+
   render() {
     return (
       <div>
         {this.props.children}
         {this.state.loading ? <Spinner /> : null}
+        <ScrollToTopButton />
       </div>
     );
   }
@@ -51,5 +58,3 @@ InfiniteScroll.propTypes = {
   getNext: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
-
-export default InfiniteScroll;

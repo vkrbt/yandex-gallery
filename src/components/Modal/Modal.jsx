@@ -10,7 +10,7 @@ const defaultState = {
   transform: 'translateY(0)',
 };
 
-class Modal extends PureComponent {
+export class Modal extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -101,7 +101,9 @@ class Modal extends PureComponent {
     }
     if (Math.abs(this.firstTouch.clientY - this.lastTouch.clientY) > this.overlay.clientHeight / 4) {
       const scrollDirection = this.firstTouch.clientY - this.lastTouch.clientY > 0 ? '-' : '';
-      this.overlay.style.opacity = '0';
+      this.setState({
+        opacity: 0,
+      });
       this.handleCloseWithAnimation(e, scrollDirection);
     } else {
       this.setState({
@@ -167,5 +169,3 @@ Modal.propTypes = {
   transitionDuration: PropTypes.number,
   children: PropTypes.node.isRequired,
 };
-
-export default Modal;

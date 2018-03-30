@@ -21,6 +21,4 @@ const imagesLinks = [
   'http://bm.img.com.ua/nxs/img/prikol/images/large/3/9/315193_942797.jpg',
 ];
 
-const images = imagesLinks.map((image, i) => ({ src: image, id: i }));
-
-export default images;
+export const images = imagesLinks.map((image, i) => ({ src: image, id: i }));

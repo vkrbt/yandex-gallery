@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
-import Gallery from './Gallery';
-import { getNextPhotos } from './redux/action'
+import { Gallery } from './Gallery';
+import { getNextPhotos } from './redux/action';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   images: state.images,
 });
 
 const mapDispatchToProps = {
-  getNextPhotos
+  getNextPhotos,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Gallery);
+export const GalleryContainer = connect(mapStateToProps, mapDispatchToProps)(Gallery);

@@ -1,13 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { calculateRatio, calculateWidth } from '../../helpers/image';
 
-class ImageTile extends PureComponent {
+export class ImageTile extends PureComponent {
   constructor(props) {
     super(props);
+
+    const imageRatio = calculateRatio(props.image.width, props.image.height);
 
     this.state = {
       isLoaded: false,
       isError: false,
+      width: calculateWidth(props.tileHeight, imageRatio),
     };
 
     this.image = null;
@@ -45,7 +49,7 @@ class ImageTile extends PureComponent {
         role="button"
         tabIndex="0"
         className="image-tile"
-        style={{ backgroundColor: this.props.image.color }}
+        style={{ backgroundColor: this.props.image.color, flexBasis: this.state.width }}
         onClick={this.handleSelect}
         onKeyPress={this.handleSelect}
       >
@@ -54,6 +58,10 @@ class ImageTile extends PureComponent {
     ) : null;
   }
 }
+
+ImageTile.defaultProps = {
+  tileHeight: 200,
+};
 
 ImageTile.propTypes = {
   image: PropTypes.shape({
@@ -67,6 +75,5 @@ ImageTile.propTypes = {
     }).isRequired,
   }).isRequired,
   handleSelect: PropTypes.func.isRequired,
+  tileHeight: PropTypes.number,
 };
-
-export default ImageTile;

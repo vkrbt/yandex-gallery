@@ -1,0 +1,48 @@
+.to-top {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 50px;
+  height: 50px;
+
+  transition: 0.2s ease-in-out;
+  transform: scale(0);
+
+  opacity: 0;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  background: transparent;
+  background-color: #000;
+  &:hover {
+    opacity: 1;
+  }
+  &::after {
+    display: block;
+    content: '\25B2';
+    transition: 0.2s ease-in;
+    transform: rotateZ(0);
+
+    color: #fff;
+
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
+}
+
+.to-top--showed {
+  transform: scale(1);
+
+  opacity: 0.8;
+}
+
+.to-top--to-bottom {
+  &::after {
+    transform: rotateZ(180deg);
+  }
+}

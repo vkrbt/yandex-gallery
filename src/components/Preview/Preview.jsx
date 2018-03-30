@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 const defaultState = {
   transform: 'translateX(0)',
   transitionDuration: 0,
-}
-class Preview extends PureComponent {
+};
+export class Preview extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,7 +80,7 @@ class Preview extends PureComponent {
           isPrevImageExist: true,
           imagePos: this.state.imagePos + 1,
           isNextImageExist,
-          ...defaultState
+          ...defaultState,
         });
       }, this.props.transitionDuration);
     } else {
@@ -166,13 +166,21 @@ class Preview extends PureComponent {
         >
           {isPrevImageExist ? (
             <div className="preview__image-wrapper_prev">
-              <img className="preview__image_prev" src={this.props.images[this.state.imagePos - 1].urls.regular} alt="" />
+              <img
+                className="preview__image_prev"
+                src={this.props.images[this.state.imagePos - 1].urls.regular}
+                alt=""
+              />
             </div>
           ) : null}
           {currentImage ? <img className="preview__image" src={currentImage.urls.regular} alt="" /> : null}
           {isNextImageExist ? (
             <div className="preview__image-wrapper_next">
-              <img className="preview__image_next" src={this.props.images[this.state.imagePos + 1].urls.regular} alt="" />
+              <img
+                className="preview__image_next"
+                src={this.props.images[this.state.imagePos + 1].urls.regular}
+                alt=""
+              />
             </div>
           ) : null}
         </div>
@@ -199,5 +207,3 @@ Preview.propTypes = {
   currentId: PropTypes.string,
   transitionDuration: PropTypes.number,
 };
-
-export default Preview;

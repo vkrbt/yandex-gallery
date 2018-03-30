@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../Modal/Modal';
-import Preview from '../Preview/Preview';
-import Images from '../Images/Images';
-import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
+import { Modal } from '../Modal/Modal';
+import { Preview } from '../Preview/Preview';
+import { Images } from '../Images/Images';
+import { InfiniteScroll } from '../InfiniteScroll/InfiniteScroll';
 
-class Gallery extends PureComponent {
+export class Gallery extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -43,5 +43,3 @@ Gallery.propTypes = {
   }),
   getNextPhotos: PropTypes.func.isRequired,
 };
-
-export default Gallery;
