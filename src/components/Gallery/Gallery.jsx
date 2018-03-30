@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from '../Modal/Modal';
 import { Preview } from '../Preview/Preview';
-import { Images } from '../Images/Images';
+import { ImagesList } from '../ImagesList/Images';
 import { InfiniteScroll } from '../InfiniteScroll/InfiniteScroll';
 
 export class Gallery extends PureComponent {
@@ -27,7 +27,7 @@ export class Gallery extends PureComponent {
     return (
       <React.Fragment>
         <InfiniteScroll getNext={this.props.getNextPhotos}>
-          <Images images={this.props.images.items} handleSelect={this.handleOpenModal} />
+          <ImagesList images={this.props.images.items} handleSelect={this.handleOpenModal} />
         </InfiniteScroll>
         <Modal ref={this.createModalRef}>
           <Preview images={this.props.images.items} currentId={this.state.currentImageId} />

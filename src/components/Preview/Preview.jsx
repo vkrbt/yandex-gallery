@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Img } from '../Img/Img';
 
 const defaultState = {
   transform: 'translateX(0)',
@@ -166,21 +167,13 @@ export class Preview extends PureComponent {
         >
           {isPrevImageExist ? (
             <div className="preview__image-wrapper_prev">
-              <img
-                className="preview__image_prev"
-                src={this.props.images[this.state.imagePos - 1].urls.regular}
-                alt=""
-              />
+              <Img className="preview__image_prev" src={this.props.images[this.state.imagePos - 1].urls.regular} />
             </div>
           ) : null}
-          {currentImage ? <img className="preview__image" src={currentImage.urls.regular} alt="" /> : null}
+          {currentImage ? <Img className="preview__image" src={currentImage.urls.regular} /> : null}
           {isNextImageExist ? (
             <div className="preview__image-wrapper_next">
-              <img
-                className="preview__image_next"
-                src={this.props.images[this.state.imagePos + 1].urls.regular}
-                alt=""
-              />
+              <Img className="preview__image_next" src={this.props.images[this.state.imagePos + 1].urls.regular} />
             </div>
           ) : null}
         </div>

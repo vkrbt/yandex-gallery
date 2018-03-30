@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Img } from '../Img/Img';
 import { calculateRatio, calculateWidth } from '../../helpers/image';
 
 export class ImageTile extends PureComponent {
@@ -9,27 +10,12 @@ export class ImageTile extends PureComponent {
     const imageRatio = calculateRatio(props.image.width, props.image.height);
 
     this.state = {
-      isLoaded: false,
       isError: false,
       width: calculateWidth(props.tileHeight, imageRatio),
     };
 
-    this.image = null;
-
-    this.handleImageLoad = this.handleImageLoad.bind(this);
     this.handleImageError = this.handleImageError.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-
-    this.image = new Image();
-    this.image.addEventListener('load', this.handleImageLoad);
-    this.image.addEventListener('error', this.handleImageError);
-    this.image.src = this.props.image.urls.small;
-  }
-
-  handleImageLoad() {
-    this.setState({
-      isLoaded: true,
-    });
   }
 
   handleImageError() {
@@ -43,7 +29,7 @@ export class ImageTile extends PureComponent {
   }
 
   render() {
-    const { isError, isLoaded } = this.state;
+    const { isError } = this.state;
     return !isError ? (
       <div
         role="button"
@@ -53,7 +39,7 @@ export class ImageTile extends PureComponent {
         onClick={this.handleSelect}
         onKeyPress={this.handleSelect}
       >
-        {isLoaded ? <img className="image-tile__image" src={this.image.src} alt="" /> : null}
+        <Img className="image-tile__image" src={this.props.image.urls.small} onImageError={this.handleImageError} />
       </div>
     ) : null;
   }

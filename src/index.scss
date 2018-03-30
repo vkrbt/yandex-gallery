@@ -4,7 +4,7 @@ $bp_landscape_mobile: 768px;
 
 @import './styles/base';
 @import './components/Modal/modal';
-@import './components/Images/images';
+@import 'components/ImagesList/images';
 @import './components/Preview/preview';
 @import './components/ImageTile/imageTile';
 @import './components/Spinner/spinner';
