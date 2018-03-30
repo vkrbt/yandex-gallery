@@ -3,12 +3,13 @@
 
   overflow: hidden;
   flex-grow: 1;
+
+  height: 200px;
   margin: $tile-padding;
   margin-bottom: 0;
   margin-left: 0;
 
   cursor: pointer;
-  height: 200px;
 
   outline: none;
   &::after {
@@ -35,12 +36,13 @@
     }
   }
   &__image {
-    object-fit: cover;
     flex-grow: 1;
 
     min-width: 100%;
     max-width: 100%;
     height: inherit;
+
+    object-fit: cover;
   }
   @media screen and (max-width: $bp_portrait_mobile) and (orientation: portrait) {
     flex-basis: 100%!important;

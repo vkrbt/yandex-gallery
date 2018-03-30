@@ -20,15 +20,18 @@
     opacity: 1;
   }
   &::after {
-    content: '';
     display: block;
+
     width: 0;
     height: 0;
-    border: 5px solid #fff;
-    border-bottom-color: transparent;
-    border-right-color: transparent;
-    transform: translateY(25%) rotateZ(45deg);
+
+    content: '';
     transition: 0.2s ease-out;
+    transform: translateY(25%) rotateZ(45deg);
+
+    border: 5px solid #fff;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
   }
 }
 

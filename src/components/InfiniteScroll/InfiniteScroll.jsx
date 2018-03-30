@@ -45,11 +45,11 @@ export class InfiniteScroll extends PureComponent {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         {this.props.children}
-        {this.state.loading ? <Spinner /> : null}
+        <Spinner loading={this.state.loading} action={this.handleGetNext} />
         <ScrollToTopButton />
-      </div>
+      </React.Fragment>
     );
   }
 }

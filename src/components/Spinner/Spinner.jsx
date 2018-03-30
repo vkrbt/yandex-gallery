@@ -1,7 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { Button } from '../Button/Button';
 
-export const Spinner = () => (
-  <div className="spinner-wrapper">
-    <div className="spinner" />
+export const Spinner = props => (
+  <div className="loading-wrapper">
+    {props.loading ? (
+      <div className="spinner" />
+    ) : (
+      <Button onClick={props.action} className="load-more">
+        Load more
+      </Button>
+    )}
   </div>
 );
+
+Spinner.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  action: PropTypes.func,
+}
