@@ -1,18 +1,14 @@
-$bp_portrait_mobile: 480px;
-$bp_landscape_mobile: 768px;
-
 .image-tile {
   position: relative;
 
   overflow: hidden;
   flex-grow: 1;
-
-  min-height: 200px;
   margin: $tile-padding;
   margin-bottom: 0;
   margin-left: 0;
 
   cursor: pointer;
+  height: 200px;
 
   outline: none;
   &::after {
@@ -39,21 +35,16 @@ $bp_landscape_mobile: 768px;
     }
   }
   &__image {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-
+    object-fit: cover;
     flex-grow: 1;
 
     min-width: 100%;
     max-width: 100%;
     height: inherit;
-
-    transform: translate(-50%, -50%);
   }
   @media screen and (max-width: $bp_portrait_mobile) and (orientation: portrait) {
-    flex-basis: 100%;
+    flex-basis: 100%!important;
 
-    height: auto;
+    height: auto!important;
   }
 }

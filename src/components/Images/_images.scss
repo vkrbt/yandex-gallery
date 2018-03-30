@@ -1,5 +1,3 @@
-$tile-padding: 5px;
-
 .images {
   display: flex;
   overflow-y: auto;
@@ -11,5 +9,8 @@ $tile-padding: 5px;
     flex-grow: 9999;
 
     content: '';
+  }
+  @media (max-width: $bp_portrait_mobile) {
+    flex-direction: column;
   }
 }

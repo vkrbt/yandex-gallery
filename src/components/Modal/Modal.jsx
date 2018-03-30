@@ -79,7 +79,7 @@ export class Modal extends PureComponent {
       e.preventDefault();
       const swipeProgress = 1 - Math.abs(currentTouch.clientY - this.firstTouch.clientY) / this.overlay.clientHeight;
       this.setState({
-        transform: `translateY(${currentTouch.clientY - this.swipeStartY}px)`,
+        transform: `translateY(${currentTouch.clientY - this.firstTouch.clientY}px)`,
         opacity: swipeProgress,
       });
       [this.lastTouch] = e.touches;
