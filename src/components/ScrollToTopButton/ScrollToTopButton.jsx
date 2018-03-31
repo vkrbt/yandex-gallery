@@ -2,15 +2,20 @@ import React, { PureComponent } from 'react';
 import classnames from 'classnames';
 import { Button } from '../Button/Button';
 
+const handleScrollClick = () => {
+  window.scroll({
+    top: 0,
+    behavior: 'smooth',
+  });
+};
+
 export class ScrollToTopButton extends PureComponent {
   constructor() {
     super();
     this.state = {
       isShowed: false,
-      lastScroll: 0,
     };
     this.handleScroll = this.handleScroll.bind(this);
-    this.handleScrollClick = this.handleScrollClick.bind(this);
   }
   componentDidMount() {
     document.addEventListener('scroll', this.handleScroll);
@@ -22,25 +27,16 @@ export class ScrollToTopButton extends PureComponent {
 
   handleScroll() {
     if (window.scrollY > 0) {
-      this.setState({ isShowed: true, lastScroll: this.state.lastScroll ? this.state.lastScroll : 0 });
+      this.setState({ isShowed: true });
     } else {
       this.setState({ isShowed: false });
     }
   }
 
-  handleScrollClick() {
-    window.scroll({
-      top: this.state.lastScroll,
-      behavior: 'smooth',
-    });
-    this.setState({ lastScroll: window.scrollY });
-  }
-
   render() {
     const classNames = classnames('to-top', {
-      'to-top--showed': this.state.isShowed || this.state.lastScroll,
-      'to-top--to-bottom': this.state.lastScroll,
+      'to-top--showed': this.state.isShowed,
     });
-    return <Button className={classNames} onClick={this.handleScrollClick} />;
+    return <Button className={classNames} onClick={handleScrollClick} />;
   }
 }
