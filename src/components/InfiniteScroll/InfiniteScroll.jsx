@@ -47,7 +47,11 @@ export class InfiniteScroll extends PureComponent {
     return (
       <React.Fragment>
         {this.props.children}
-        <Spinner loading={this.state.loading} action={this.handleGetNext} />
+        <Spinner
+          loading={this.state.loading}
+          action={this.handleGetNext}
+          text={this.props.error && !this.state.loading ? 'Retry' : 'Load More'}
+        />
         <ScrollToTopButton />
       </React.Fragment>
     );
@@ -57,4 +61,5 @@ export class InfiniteScroll extends PureComponent {
 InfiniteScroll.propTypes = {
   getNext: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  error: PropTypes.bool.isRequired,
 };

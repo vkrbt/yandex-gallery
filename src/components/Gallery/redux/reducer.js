@@ -25,9 +25,9 @@ export const images = (state = defaultState, { type, payload }) => {
       };
     case GET_PHOTOS_LIST_ERROR:
       return {
+        ...state,
         loading: false,
         success: false,
-        ...state,
       };
     case CLEAR_PHOTOS:
       return {

@@ -8,7 +8,7 @@ export const Spinner = props => (
       <div className="spinner" />
     ) : (
       <Button onClick={props.action} className="load-more">
-        Load more
+        {props.text}
       </Button>
     )}
   </div>
@@ -16,5 +16,6 @@ export const Spinner = props => (
 
 Spinner.propTypes = {
   loading: PropTypes.bool.isRequired,
+  text: PropTypes.string.isRequired,
   action: PropTypes.func,
 }

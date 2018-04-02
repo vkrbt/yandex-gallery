@@ -26,7 +26,7 @@ export class Gallery extends PureComponent {
   render() {
     return (
       <React.Fragment>
-        <InfiniteScroll getNext={this.props.getNextPhotos}>
+        <InfiniteScroll error={!this.props.images.success} getNext={this.props.getNextPhotos}>
           <ImagesList images={this.props.images.items} handleSelect={this.handleOpenModal} />
         </InfiniteScroll>
         <Modal ref={this.createModalRef}>
@@ -44,6 +44,7 @@ export class Gallery extends PureComponent {
 Gallery.propTypes = {
   images: PropTypes.shape({
     items: PropTypes.array.isRequired,
+    success: PropTypes.bool.isRequired,
   }),
   getNextPhotos: PropTypes.func.isRequired,
 };
