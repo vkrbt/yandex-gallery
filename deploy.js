@@ -5,11 +5,11 @@ ghpages.publish(
   'build',
   {
     branch: 'gh-pages',
-    repo: `https://${process.env.GH_TOKEN}@github.com/vkrbt/yandex-gallery.git`,
+    repo: `https://${process.env.GITHUB_TOKEN}@github.com/vkrbt/yandex-gallery.git`,
   },
   err => {
     if (err) {
-      console.log(err);
+      throw err;
     } else {
       console.log('Sucessfully deployed!');
     }
