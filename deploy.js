@@ -11,7 +11,7 @@ ghpages.publish(
     if (err) {
       throw err;
     } else {
-      console.log('Sucessfully deployed!');
+      console.log('Sucсessfully deployed!');
     }
   },
 );
