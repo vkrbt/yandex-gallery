@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import Modal from '../Modal/Modal';
-import Preview from '../Preview/Preview';
-import ImageTile from '../ImageTile/ImageTile';
+import { Modal } from '../Modal/Modal';
+import { Preview } from '../Preview/Preview';
+import { ImagesList } from '../ImagesList/ImagesList';
+import { InfiniteScroll } from '../InfiniteScroll/InfiniteScroll';
 
-class Gallery extends PureComponent {
+export class Gallery extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -16,7 +17,7 @@ class Gallery extends PureComponent {
 
   handleOpenModal(image) {
     this.setState({ currentImageId: image.id }, this.modal.handleOpen);
-  };
+  }
 
   createModalRef(modal) {
     this.modal = modal;
@@ -24,25 +25,26 @@ class Gallery extends PureComponent {
 
   render() {
     return (
-      <div className="gallery">
-        {this.props.images.map(image => (
-          <ImageTile key={image.id} image={image} handleSelect={this.handleOpenModal} />
-        ))}
+      <React.Fragment>
+        <InfiniteScroll error={!this.props.images.success} getNext={this.props.getNextPhotos}>
+          <ImagesList images={this.props.images.items} handleSelect={this.handleOpenModal} />
+        </InfiniteScroll>
         <Modal ref={this.createModalRef}>
-          <Preview images={this.props.images} currentId={this.state.currentImageId} />
+          <Preview
+            getNext={this.props.getNextPhotos}
+            images={this.props.images.items}
+            currentId={this.state.currentImageId}
+          />
         </Modal>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
 Gallery.propTypes = {
-  images: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      src: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  images: PropTypes.shape({
+    items: PropTypes.array.isRequired,
+    success: PropTypes.bool.isRequired,
+  }),
+  getNextPhotos: PropTypes.func.isRequired,
 };
-
-export default Gallery;

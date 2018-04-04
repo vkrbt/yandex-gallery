@@ -1,33 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { Img } from '../Img/Img';
+import { calculateRatio, calculateWidth } from '../../helpers/image';
 
-class ImageTile extends PureComponent {
-  constructor() {
-    super();
+export class ImageTile extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    const imageRatio = calculateRatio(props.image.width, props.image.height);
 
     this.state = {
-      isLoaded: false,
+      isError: false,
+      width: calculateWidth(props.tileHeight, imageRatio),
     };
 
-    this.image = null;
-
-    this.handleImageLoad = this.handleImageLoad.bind(this);
+    this.handleImageError = this.handleImageError.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
   }
 
-  componentDidMount() {
-    this.image = new Image();
-    this.image.addEventListener('load', this.handleImageLoad);
-    this.image.src = this.props.image.src;
-  }
-
-  componentWillUnmount() {
-    this.image.removeEventListener('load', this.handleImageLoad);
-  }
-
-  handleImageLoad() {
+  handleImageError() {
     this.setState({
-      isLoaded: true,
+      isError: true,
     });
   }
 
@@ -36,20 +29,37 @@ class ImageTile extends PureComponent {
   }
 
   render() {
-    return this.state.isLoaded ? (
-      <div role="button" tabIndex="0" className="image-tile" onClick={this.handleSelect} onKeyPress={this.handleSelect}>
-        <img className="image-tile__image" src={this.image.src} alt="" />
+    const { isError } = this.state;
+    return !isError ? (
+      <div
+        role="button"
+        tabIndex="0"
+        className="image-tile"
+        style={{ backgroundColor: this.props.image.color, flexBasis: this.state.width }}
+        onClick={this.handleSelect}
+        onKeyPress={this.handleSelect}
+      >
+        <Img className="image-tile__image" src={this.props.image.urls.small} onImageError={this.handleImageError} />
       </div>
     ) : null;
   }
 }
 
-ImageTile.propTypes = {
-  image: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    src: PropTypes.string.isRequired,
-  }).isRequired,
-  handleSelect: PropTypes.func.isRequired,
+ImageTile.defaultProps = {
+  tileHeight: 200,
 };
 
-export default ImageTile;
+ImageTile.propTypes = {
+  image: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    color: PropTypes.string.isRequired,
+    urls: PropTypes.shape({
+      small: PropTypes.string.isRequired,
+      regular: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  handleSelect: PropTypes.func.isRequired,
+  tileHeight: PropTypes.number,
+};
