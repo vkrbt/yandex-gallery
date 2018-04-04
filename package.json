@@ -57,7 +57,7 @@
     "test": "node scripts/test.js --env=jsdom",
     "predeploy": "yarn build",
     "deploy": "gh-pages -d build",
-    "lint": "eslint .eslintrc <rootDir>/src/**/*.{jsx,jx} --ignore-pattern '!<relative/path/to/filename>'"
+    "lint": "eslint .eslintrc ./src/**/*.{jsx,jx}"
   },
   "devDependencies": {
     "eslint-config-airbnb": "^16.1.0",
