@@ -1,4 +1,4 @@
-language node_js
+language: node_js
 
 script:
   - yarn lint
@@ -9,4 +9,4 @@ deploy:
   github-token: $GITHUB_TOKEN  # Set in travis-ci.org dashboard, marked secure
   keep-history: true
   on:
-    branch: master
+    branch: gh-pages
