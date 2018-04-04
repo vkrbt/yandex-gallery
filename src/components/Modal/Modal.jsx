@@ -2,11 +2,20 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
-class Modal extends PureComponent {
+const body = document.getElementsByTagName('body')[0];
+
+const defaultState = {
+  transitionDuration: 0,
+  opacity: 1,
+  transform: 'translateY(0)',
+};
+
+export class Modal extends PureComponent {
   constructor() {
     super();
     this.state = {
       isOpened: false,
+      ...defaultState,
     };
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -25,11 +34,13 @@ class Modal extends PureComponent {
 
   handleOpen() {
     document.addEventListener('keydown', this.handleEscKeypress);
-    this.setState({ isOpened: true });
+    body.classList.add('body--modal-is-opened');
+    this.setState({ isOpened: true, ...defaultState });
   }
 
   handleClose() {
     document.removeEventListener('keydown', this.handleEscKeypress);
+    body.classList.remove('body--modal-is-opened');
     this.setState({ isOpened: false });
   }
 
@@ -46,52 +57,79 @@ class Modal extends PureComponent {
   }
 
   handleCloseWithAnimation(e, direction = '') {
-    this.overlay.style.transitionDuration = `${this.props.transitionDuration}ms`;
-    this.overlay.style.transform = `translateY(${direction}100%)`;
-    this.overlay.style.opacity = '0';
+    this.setState({
+      transitionDuration: `${this.props.transitionDuration}ms`,
+      transform: `translateY(${direction}100%)`,
+      opacity: 0,
+    });
     setTimeout(this.handleClose, this.props.transitionDuration);
   }
 
   handleTouchStart(e) {
-    this.swipeStartY = e.touches[0].clientY;
+    [this.firstTouch] = e.touches;
   }
 
   handleTouchMove(e) {
-    const currentSwipePosY = e.touches[0].clientY;
-    const swipeProgress = 1 - Math.abs(currentSwipePosY - this.swipeStartY) / this.overlay.clientHeight;
-
-    this.overlay.style.transform = `translateY(${currentSwipePosY - this.swipeStartY}px)`;
-    this.overlay.style.opacity = `${swipeProgress}`;
-    [this.lastTouch] = e.touches;
+    const [currentTouch] = e.touches;
+    if (!currentTouch) {
+      return;
+    }
+    if (this.swipeIsHorizontal) {
+      e.stopPropagation();
+      e.preventDefault();
+      const swipeProgress = 1 - Math.abs(currentTouch.clientY - this.firstTouch.clientY) / this.overlay.clientHeight;
+      this.setState({
+        transform: `translateY(${currentTouch.clientY - this.firstTouch.clientY}px)`,
+        opacity: swipeProgress,
+      });
+      [this.lastTouch] = e.touches;
+      return;
+    }
+    const horizontalDistance = Math.abs(currentTouch.clientX - this.firstTouch.clientX);
+    const verticalDistance = Math.abs(currentTouch.clientY - this.firstTouch.clientY);
+    if (verticalDistance > horizontalDistance) {
+      e.stopPropagation();
+      e.preventDefault();
+      this.swipeIsHorizontal = true;
+    }
+    this.lastTouch = null;
   }
 
   handleTouchEnd(e) {
     if (!this.lastTouch) {
       return;
     }
-    if (Math.abs(this.swipeStartY - this.lastTouch.clientY) > this.overlay.clientHeight / 4) {
-      const scrollDirection = this.swipeStartY - this.lastTouch.clientY > 0 ? '-' : '';
-      this.overlay.style.opacity = '0';
+    if (Math.abs(this.firstTouch.clientY - this.lastTouch.clientY) > this.overlay.clientHeight / 4) {
+      const scrollDirection = this.firstTouch.clientY - this.lastTouch.clientY > 0 ? '-' : '';
+      this.setState({
+        opacity: 0,
+      });
       this.handleCloseWithAnimation(e, scrollDirection);
     } else {
-      this.overlay.style.opacity = '1';
-      this.overlay.style.transitionDuration = `${this.props.transitionDuration}ms`;
-      this.overlay.style.transform = 'translateY(0)';
+      this.setState({
+        opacity: 1,
+        transitionDuration: `${this.props.transitionDuration}ms`,
+        transform: 'translateY(0)',
+      });
       setTimeout(() => {
-        this.overlay.style.transitionDuration = '0ms';
+        this.setState({
+          transitionDuration: '0ms',
+        });
       }, this.props.transitionDuration);
     }
     this.lastTouch = null;
   }
 
-  createOverlayRef(everlay) {
-    this.overlay = everlay;
+  createOverlayRef(overlay) {
+    this.overlay = overlay;
   }
 
   render() {
     if (!this.state.isOpened) {
       return null;
     }
+    const { transitionDuration, opacity, transform } = this.state;
+    const overlayStyle = { transitionDuration, opacity, transform };
     /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
     return ReactDOM.createPortal(
       <div
@@ -102,13 +140,10 @@ class Modal extends PureComponent {
         onTouchEnd={this.handleTouchEnd}
         onTouchCancel={this.handleTouchEnd}
         ref={this.createOverlayRef}
+        style={overlayStyle}
       >
         {/* eslint-disable jsx-a11y/no-static-element-interactions */}
-        <div
-          onClick={this.handleCloseWithAnimation}
-          onKeyPress={this.handleCloseKeyPress}
-          className="modal-shadow"
-        />
+        <div onClick={this.handleCloseWithAnimation} onKeyPress={this.handleCloseKeyPress} className="modal-shadow" />
         {/* eslint-enable jsx-a11y/no-static-element-interactions */}
         <div
           tabIndex="0"
@@ -134,5 +169,3 @@ Modal.propTypes = {
   transitionDuration: PropTypes.number,
   children: PropTypes.node.isRequired,
 };
-
-export default Modal;

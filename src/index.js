@@ -1,10 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import 'reset-css/_reset.scss';
+import { App } from './App';
+import { unregister } from './registerServiceWorker';
 import './index.scss';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import { store } from './store';
 
-// eslint-disable-next-line react/jsx-filename-extension
-ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+/* eslint-disable react/jsx-filename-extension */
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+);
+unregister();

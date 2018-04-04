@@ -5,20 +5,17 @@
   flex-grow: 1;
 
   height: 200px;
-  height: calc(150px + 5vh);
-  padding: $tile-padding;
-  padding-bottom: 0;
-  padding-left: 0;
+  margin: $tile-padding;
+  margin-bottom: 0;
+  margin-left: 0;
 
   cursor: pointer;
 
   outline: none;
-
-  appearance: none;
   &::after {
     position: absolute;
-    top: $tile-padding;
-    right: $tile-padding;
+    top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
 
@@ -27,19 +24,18 @@
 
     opacity: 0;
     background-color: #000;
-
-    will-change: opacity;
   }
   &:hover,
   &:focus {
-    &::after {
-      visibility: visible;
+    @media not all and (pointer: coarse) {
+      &::after {
+        visibility: visible;
 
-      opacity: 0.3;
+        opacity: 0.3;
+      }
     }
   }
   &__image {
-    display: block;
     flex-grow: 1;
 
     min-width: 100%;
@@ -47,16 +43,5 @@
     height: inherit;
 
     object-fit: cover;
-  }
-  @media screen and (max-width: $bp_portrait_mobile) and (orientation: portrait) {
-    flex-basis: 100%;
-
-    height: auto;
-  }
-  @media screen and (max-width: $bp_landscape_mobile) and (orientation: landscape) {
-    flex-shrink: 0;
-
-    height: inherit;
-    max-height: 100%;
   }
 }

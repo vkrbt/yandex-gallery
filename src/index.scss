@@ -1,5 +1,12 @@
+$tile-padding: 5px;
+$bp_portrait_mobile: 480px;
+$bp_landscape_mobile: 768px;
+
 @import './styles/base';
+@import './components/Button/button';
 @import './components/Modal/modal';
-@import './components/Gallery/gallery';
+@import './components/ImagesList/imagesList';
 @import './components/Preview/preview';
 @import './components/ImageTile/imageTile';
+@import './components/Spinner/spinner';
+@import './components/ScrollToTopButton/scrollToTop';
