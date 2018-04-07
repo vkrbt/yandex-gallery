@@ -157,6 +157,9 @@ export class Preview extends PureComponent {
     const currentImage = this.state.imagePos !== null ? this.props.images[this.state.imagePos] : null;
     const { isPrevImageExist, isNextImageExist, transform, transitionDuration } = this.state;
     const trackStyle = { transitionDuration: `${transitionDuration}ms`, transform };
+
+    const prevImage = isPrevImageExist ? this.props.images[this.state.imagePos - 1] : null;
+    const nextImage = isNextImageExist ? this.props.images[this.state.imagePos + 1] : null;
     return (
       <div className="preview">
         {isPrevImageExist ? (
@@ -171,17 +174,17 @@ export class Preview extends PureComponent {
           ref={this.createTrackRef}
           style={trackStyle}
         >
-          {isPrevImageExist ? (
-            <div className="preview__image-wrapper_prev">
-              <Img className="preview__image_prev" src={this.props.images[this.state.imagePos - 1].urls.regular} />
-            </div>
-          ) : null}
-          {currentImage ? <Img className="preview__image" src={currentImage.urls.regular} /> : null}
-          {isNextImageExist ? (
-            <div className="preview__image-wrapper_next">
-              <Img className="preview__image_next" src={this.props.images[this.state.imagePos + 1].urls.regular} />
-            </div>
-          ) : null}
+          {[
+            <div key={prevImage ? prevImage.id : -1} className="preview__image-wrapper preview__image-wrapper_prev">
+              <Img className="preview__image_prev" src={prevImage.urls.regular} />
+            </div>,
+            <div key={currentImage.id} className="preview__image-wrapper">
+              <Img className="preview__image" src={currentImage.urls.regular} />
+            </div>,
+            <div key={nextImage ? nextImage.id : 1} className="preview__image-wrapper preview__image-wrapper_next">
+              <Img className="preview__image_next" src={nextImage.urls.regular} />
+            </div>,
+          ]}
         </div>
         {isNextImageExist ? (
           <button className="preview__control preview__control_next" onClick={this.handleNextImage} />

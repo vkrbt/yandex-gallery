@@ -40,6 +40,7 @@ export class ImageTile extends PureComponent {
         onKeyPress={this.handleSelect}
       >
         <Img className="image-tile__image" src={this.props.image.urls.small} onImageError={this.handleImageError} />
+        <div />
       </div>
     ) : null;
   }
