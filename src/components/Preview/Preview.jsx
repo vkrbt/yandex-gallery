@@ -176,13 +176,13 @@ export class Preview extends PureComponent {
         >
           {[
             <div key={prevImage ? prevImage.id : -1} className="preview__image-wrapper preview__image-wrapper_prev">
-              <Img className="preview__image_prev" src={prevImage.urls.regular} />
+              {prevImage ? <Img className="preview__image_prev" src={prevImage.urls.regular} /> : null}
             </div>,
             <div key={currentImage.id} className="preview__image-wrapper">
               <Img className="preview__image" src={currentImage.urls.regular} />
             </div>,
             <div key={nextImage ? nextImage.id : 1} className="preview__image-wrapper preview__image-wrapper_next">
-              <Img className="preview__image_next" src={nextImage.urls.regular} />
+              {nextImage ? <Img className="preview__image_next" src={nextImage.urls.regular} /> : null}
             </div>,
           ]}
         </div>
