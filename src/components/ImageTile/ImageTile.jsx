@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Img } from '../Img/Img';
 import { calculateRatio, calculateWidth } from '../../helpers/image';
+import { stopPropagation } from '../../helpers/events';
 
+const applicationName = 'yandex-gallery';
 export class ImageTile extends PureComponent {
   constructor(props) {
     super(props);
@@ -40,7 +42,26 @@ export class ImageTile extends PureComponent {
         onKeyPress={this.handleSelect}
       >
         <Img className="image-tile__image" src={this.props.image.urls.small} onImageError={this.handleImageError} />
-        <div />
+        <p className="image-tile__description">
+          Photo by{' '}
+          <a
+            onClick={stopPropagation}
+            className="image-tile__link"
+            href={`https://unsplash.com/@${
+              this.props.image.user.username
+            }?utm_source=${applicationName}&utm_medium=referral`}
+          >
+            {this.props.image.user.name}
+          </a>{' '}
+          on{' '}
+          <a
+            onClick={stopPropagation}
+            className="image-tile__link"
+            href={`https://unsplash.com/?utm_source=${applicationName}&utm_medium=referral`}
+          >
+            Unsplash
+          </a>
+        </p>
       </div>
     ) : null;
   }
@@ -59,6 +80,10 @@ ImageTile.propTypes = {
     urls: PropTypes.shape({
       small: PropTypes.string.isRequired,
       regular: PropTypes.string.isRequired,
+    }).isRequired,
+    user: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      username: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
   handleSelect: PropTypes.func.isRequired,
