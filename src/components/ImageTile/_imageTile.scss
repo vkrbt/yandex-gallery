@@ -57,7 +57,7 @@ $hover-animation: 0.1s ease-out;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
     opacity: 0;
-    transform: translateY(100%);
+    transform: translate3d(0, 100%, 0);
     transform-origin: 100% 100%;
     transition: $hover-animation;
   }
