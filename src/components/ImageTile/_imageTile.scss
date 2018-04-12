@@ -1,3 +1,5 @@
+$hover-animation: 0.1s ease-out;
+
 .image-tile {
   position: relative;
 
@@ -20,7 +22,7 @@
     left: 0;
 
     content: '';
-    transition: 0.1s ease;
+    transition: $hover-animation;
 
     opacity: 0;
     background-color: #000;
@@ -43,5 +45,33 @@
     height: inherit;
 
     object-fit: cover;
+  }
+  &__description {
+    font-size: 0.9rem;
+    line-height: 1.1rem;
+    padding: 5px;
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(100%);
+    transform-origin: 100% 100%;
+    transition: $hover-animation;
+  }
+  &:hover,
+  &:focus {
+    .image-tile__description {
+      opacity: 1;
+      transform: rotateX(0);
+    }
+  }
+  &__link {
+    color: #bbb;
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
