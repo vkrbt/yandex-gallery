@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Img } from '../Img/Img';
 
 const defaultState = {
-  transform: 'translateX(0)',
+  transform: 'translate3d(0, 0, 0)',
   transitionDuration: 0,
 };
 export class Preview extends PureComponent {
@@ -54,7 +54,7 @@ export class Preview extends PureComponent {
       const isPrevImageExist = !!this.props.images[this.state.imagePos - 2];
       this.setState({
         transitionDuration: this.props.transitionDuration,
-        transform: `translateX(100%)`,
+        transform: `translate3d(100%, 0, 0)`,
       });
       clearTimeout(this.timeoutId);
       this.timeoutId = setTimeout(() => {
@@ -78,7 +78,7 @@ export class Preview extends PureComponent {
       const isNextImageExist = !!this.props.images[this.state.imagePos + 2];
       this.setState({
         transitionDuration: this.props.transitionDuration,
-        transform: `translateX(-100%)`,
+        transform: `translate3d(-100%, 0, 0)`,
       });
       clearTimeout(this.timeoutId);
       this.timeoutId = setTimeout(() => {
@@ -97,7 +97,7 @@ export class Preview extends PureComponent {
   handleImageNotChanged() {
     this.setState({
       transitionDuration: this.props.transitionDuration,
-      transform: `translateX(0)`,
+      transform: `translate3d(0, 0, 0)`,
     });
     clearTimeout(this.timeoutId);
     this.timeoutId = setTimeout(() => {
@@ -119,7 +119,7 @@ export class Preview extends PureComponent {
       e.preventDefault();
       const translatePosition = currentTouch.clientX - this.firstTouch.clientX;
       this.setState({
-        transform: `translateX(${translatePosition}px)`,
+        transform: `translate3d(${translatePosition}px, 0, 0)`,
       });
       return;
     }

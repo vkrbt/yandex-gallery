@@ -7,7 +7,7 @@ const body = document.getElementsByTagName('body')[0];
 const defaultState = {
   transitionDuration: 0,
   opacity: 1,
-  transform: 'translateY(0)',
+  transform: 'translate3d(0, 0, 0)',
 };
 
 export class Modal extends PureComponent {
@@ -59,7 +59,7 @@ export class Modal extends PureComponent {
   handleCloseWithAnimation(e, direction = '') {
     this.setState({
       transitionDuration: `${this.props.transitionDuration}ms`,
-      transform: `translateY(${direction}100%)`,
+      transform: `translate3d(0, ${direction}100%, 0)`,
       opacity: 0,
     });
     setTimeout(this.handleClose, this.props.transitionDuration);
@@ -79,7 +79,7 @@ export class Modal extends PureComponent {
       e.preventDefault();
       const swipeProgress = 1 - Math.abs(currentTouch.clientY - this.firstTouch.clientY) / this.overlay.clientHeight;
       this.setState({
-        transform: `translateY(${currentTouch.clientY - this.firstTouch.clientY}px)`,
+        transform: `translate3d(0, ${currentTouch.clientY - this.firstTouch.clientY}px, 0)`,
         opacity: swipeProgress,
       });
       [this.lastTouch] = e.touches;
@@ -109,7 +109,7 @@ export class Modal extends PureComponent {
       this.setState({
         opacity: 1,
         transitionDuration: `${this.props.transitionDuration}ms`,
-        transform: 'translateY(0)',
+        transform: 'translate3d(0, 0, 0)',
       });
       setTimeout(() => {
         this.setState({

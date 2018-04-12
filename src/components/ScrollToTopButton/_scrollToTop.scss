@@ -27,7 +27,7 @@
 
     content: '';
     transition: 0.2s ease-out;
-    transform: translateY(25%) rotateZ(45deg);
+    transform: translate3d(0, 25%, 0) rotateZ(45deg);
 
     border: 5px solid #fff;
     border-right-color: transparent;
