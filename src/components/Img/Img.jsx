@@ -1,8 +1,8 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Spinner } from '../Spinner/Spinner';
 
-export class Img extends PureComponent {
+export class Img extends Component {
   constructor(props) {
     super(props);
     this.state = {

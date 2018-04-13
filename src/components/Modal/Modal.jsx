@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
@@ -10,7 +10,7 @@ const defaultState = {
   transform: 'translate3d(0, 0, 0)',
 };
 
-export class Modal extends PureComponent {
+export class Modal extends Component {
   constructor() {
     super();
     this.state = {
