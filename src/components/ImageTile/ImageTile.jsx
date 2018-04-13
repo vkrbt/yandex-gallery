@@ -1,11 +1,11 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Img } from '../Img/Img';
 import { calculateRatio, calculateWidth } from '../../helpers/image';
 import { stopPropagation } from '../../helpers/events';
 
 const applicationName = 'yandex-gallery';
-export class ImageTile extends PureComponent {
+export class ImageTile extends Component {
   constructor(props) {
     super(props);
 

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Img } from '../Img/Img';
 
@@ -6,7 +6,7 @@ const defaultState = {
   transform: 'translate3d(0, 0, 0)',
   transitionDuration: 0,
 };
-export class Preview extends PureComponent {
+export class Preview extends Component {
   constructor(props) {
     super(props);
     this.state = {

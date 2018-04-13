@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import classnames from 'classnames';
 import { Button } from '../Button/Button';
 
@@ -9,7 +9,7 @@ const handleScrollClick = () => {
   });
 };
 
-export class ScrollToTopButton extends PureComponent {
+export class ScrollToTopButton extends Component {
   constructor() {
     super();
     this.state = {

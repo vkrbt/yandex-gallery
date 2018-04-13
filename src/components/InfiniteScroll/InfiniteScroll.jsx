@@ -1,9 +1,9 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Spinner } from '../Spinner/Spinner';
 import { ScrollToTopButton } from '../ScrollToTopButton/ScrollToTopButton';
 
-export class InfiniteScroll extends PureComponent {
+export class InfiniteScroll extends Component {
   constructor() {
     super();
     this.state = {
