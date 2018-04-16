@@ -65,7 +65,13 @@ $hover-animation: 0.1s ease-out;
   &:focus {
     .image-tile__description {
       opacity: 1;
-      transform: rotateX(0);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  @media (pointer: coarse) {
+    .image-tile__description {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
     }
   }
   &__link {
