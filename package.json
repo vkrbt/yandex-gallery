@@ -57,7 +57,7 @@
     "test:jest": "node scripts/test.js --env=jsdom",
     "test:gemini": "gemini test",
     "predeploy": "yarn build",
-    "deploy": "node deploy",
+    "publish": "node deploy",
     "lint": "eslint .eslintrc ./src/**/*.{jsx,jx}",
     "selenium:install": "selenium-standalone install",
     "selenium:start": "selenium-standalone start && pantomjs --webdriver=4444"
