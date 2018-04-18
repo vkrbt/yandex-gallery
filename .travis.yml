@@ -8,6 +8,10 @@ cache: yarn
 install:
   - yarn
 
+before_script:
+  - yarn selenium:install
+  - yarn selenium:start
+
 script:
   - yarn lint
   - yarn test --coverage
