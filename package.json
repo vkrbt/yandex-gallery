@@ -75,6 +75,9 @@
     "sass-loader": "^6.0.7",
     "selenium-standalone": "^6.14.0"
   },
+  "optionalDependencies": {
+    "fsevents": "*"
+  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
