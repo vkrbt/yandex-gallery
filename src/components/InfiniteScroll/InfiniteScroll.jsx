@@ -38,9 +38,13 @@ export class InfiniteScroll extends Component {
     this.setState({ loading: false });
   }
 
-  handleGetNext() {
+  async handleGetNext() {
     this.setState({ loading: true });
-    this.props.getNext().finally(this.handleLoadingEnd);
+    try {
+      await this.props.getNext();
+    } finally {
+      this.handleLoadingEnd();
+    }
   }
 
   render() {
