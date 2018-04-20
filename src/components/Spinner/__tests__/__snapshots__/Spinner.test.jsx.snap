@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spinner should render spinner if loading 1`] = `
+<div
+  className="loading-wrapper"
+>
+  <div
+    className="spinner"
+  />
+</div>
+`;

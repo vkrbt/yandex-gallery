@@ -37,7 +37,7 @@ export class ImageTile extends Component {
         role="button"
         tabIndex="0"
         className="image-tile"
-        style={{ backgroundColor: this.props.image.color, flexBasis: this.state.width }}
+        style={{ backgroundColor: this.props.image.color, flexBasis: `${this.state.width}px` }}
         onClick={this.handleSelect}
         onKeyPress={this.handleSelect}
       >
