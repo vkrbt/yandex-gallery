@@ -5,7 +5,7 @@ import { Preview } from '../Preview';
 const images = Array.from({ length: 5 }, (item, i) => ({
   id: `${i + 1}`,
   urls: {
-    regular: 'url',
+    regular: `url${i + 1}`,
   },
 }));
 const props = {
