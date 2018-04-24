@@ -17,7 +17,6 @@ exports[`ImageTile should being rendered normally 1`] = `
   <Img
     alt=""
     className="image-tile__image"
-    onImageError={[Function]}
     src="some url"
   />
   <p

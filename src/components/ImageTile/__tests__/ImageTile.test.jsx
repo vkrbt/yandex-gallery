@@ -26,10 +26,4 @@ describe('ImageTile', () => {
     const wrapper = shallow(<ImageTile {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
-  it('should not being rendered if error was occured', () => {
-    const wrapper = shallow(<ImageTile {...props} />);
-    wrapper.setState({ isError: true });
-    expect(wrapper.html()).toBe(null);
-  });
 });

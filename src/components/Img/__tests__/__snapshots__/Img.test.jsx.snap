@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Img should being Spinner until image not loaded 1`] = `
+<Component
+  action={[Function]}
+  loading={true}
+  text="Retry"
+/>
+`;

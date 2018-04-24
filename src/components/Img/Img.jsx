@@ -7,9 +7,11 @@ export class Img extends Component {
     super(props);
     this.state = {
       isLoaded: false,
+      error: null,
     };
 
     this.handleImageLoaded = this.handleImageLoaded.bind(this);
+    this.handleImageError = this.handleImageError.bind(this);
     this.loadImage = this.loadImage.bind(this);
   }
 
@@ -21,7 +23,7 @@ export class Img extends Component {
     this.setState({ isLoaded: false });
     this.image = new Image();
     this.image.addEventListener('load', this.handleImageLoaded);
-    this.image.addEventListener('error', this.props.onImageError);
+    this.image.addEventListener('error', this.handleImageError);
     this.image.src = src;
   }
 
@@ -31,7 +33,14 @@ export class Img extends Component {
     });
   }
 
+  handleImageError(error) {
+    this.setState({ error });
+  }
+
   render() {
+    if (this.state.error) {
+      return null;
+    }
     return this.state.isLoaded ? (
       <img className={this.props.className} src={this.image.src} alt={this.props.alt} />
     ) : (
@@ -42,11 +51,11 @@ export class Img extends Component {
 
 Img.defaultProps = {
   alt: '',
+  className: '',
 };
 
 Img.propTypes = {
   src: PropTypes.string.isRequired,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   alt: PropTypes.string,
-  onImageError: PropTypes.func,
 };
