@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfiniteScroll should being rendered normally 1`] = `
+<div
+  className="preview"
+>
+  <div
+    className="preview__track"
+    onTouchCancel={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    style={
+      Object {
+        "transform": undefined,
+        "transitionDuration": "undefinedms",
+      }
+    }
+  >
+    <div
+      className="preview__image-wrapper preview__image-wrapper_prev"
+      key="-1"
+    />
+    <div
+      className="preview__image-wrapper"
+      key="1"
+    >
+      <Img
+        alt=""
+        className="preview__image"
+        src="url1"
+      />
+    </div>
+    <div
+      className="preview__image-wrapper preview__image-wrapper_next"
+      key="2"
+    >
+      <Img
+        alt=""
+        className="preview__image_next"
+        src="url2"
+      />
+    </div>
+  </div>
+  <button
+    className="preview__control preview__control_next"
+    onClick={[Function]}
+  />
+</div>
+`;

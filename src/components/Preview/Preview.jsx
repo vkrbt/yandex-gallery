@@ -201,6 +201,7 @@ Preview.defaultProps = {
 Preview.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.string.isRequired,
       urls: PropTypes.shape({
         regular: PropTypes.string.isRequired,
       }).isRequired,

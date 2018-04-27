@@ -1,6 +1,6 @@
 import { GET_PHOTOS_LIST_SENT, GET_PHOTOS_LIST_RECEIVED, GET_PHOTOS_LIST_ERROR, CLEAR_PHOTOS } from './types';
 
-const defaultState = {
+export const defaultState = {
   loading: false,
   success: false,
   items: [],
@@ -11,9 +11,9 @@ export const images = (state = defaultState, { type, payload }) => {
   switch (type) {
     case GET_PHOTOS_LIST_SENT:
       return {
+        ...state,
         loading: true,
         success: false,
-        ...state,
       };
     case GET_PHOTOS_LIST_RECEIVED:
       return {

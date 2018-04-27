@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ImageTile should being rendered normally 1`] = `
+<div
+  className="image-tile"
+  onClick={[Function]}
+  onKeyPress={[Function]}
+  role="button"
+  style={
+    Object {
+      "backgroundColor": "#FFF",
+      "flexBasis": "125px",
+    }
+  }
+  tabIndex="0"
+>
+  <Img
+    alt=""
+    className="image-tile__image"
+    src="some url"
+  />
+  <p
+    className="image-tile__description"
+  >
+    Photo by
+     
+    <a
+      className="image-tile__link"
+      href="https://unsplash.com/@username?utm_source=yandex-gallery&utm_medium=referral"
+      onClick={[Function]}
+    >
+      name
+    </a>
+     
+    on
+     
+    <a
+      className="image-tile__link"
+      href="https://unsplash.com/?utm_source=yandex-gallery&utm_medium=referral"
+      onClick={[Function]}
+    >
+      Unsplash
+    </a>
+  </p>
+</div>
+`;

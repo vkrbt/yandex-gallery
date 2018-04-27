@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InfiniteScroll should being rendered normally 1`] = `
+<React.Fragment>
+  <div>
+    children
+  </div>
+  <Component
+    action={[Function]}
+    loading={true}
+    text="Load More"
+  />
+  <ScrollToTopButton />
+</React.Fragment>
+`;

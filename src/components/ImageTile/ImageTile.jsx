@@ -12,18 +12,10 @@ export class ImageTile extends Component {
     const imageRatio = calculateRatio(props.image.width, props.image.height);
 
     this.state = {
-      isError: false,
       width: calculateWidth(props.tileHeight, imageRatio),
     };
 
-    this.handleImageError = this.handleImageError.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
-  }
-
-  handleImageError() {
-    this.setState({
-      isError: true,
-    });
   }
 
   handleSelect() {
@@ -31,17 +23,16 @@ export class ImageTile extends Component {
   }
 
   render() {
-    const { isError } = this.state;
-    return !isError ? (
+    return (
       <div
         role="button"
         tabIndex="0"
         className="image-tile"
-        style={{ backgroundColor: this.props.image.color, flexBasis: this.state.width }}
+        style={{ backgroundColor: this.props.image.color, flexBasis: `${this.state.width}px` }}
         onClick={this.handleSelect}
         onKeyPress={this.handleSelect}
       >
-        <Img className="image-tile__image" src={this.props.image.urls.small} onImageError={this.handleImageError} />
+        <Img className="image-tile__image" src={this.props.image.urls.small} />
         <p className="image-tile__description">
           Photo by{' '}
           <a
@@ -63,7 +54,7 @@ export class ImageTile extends Component {
           </a>
         </p>
       </div>
-    ) : null;
+    );
   }
 }
 
