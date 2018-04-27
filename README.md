@@ -6,6 +6,7 @@
 
 ```
 npm i
+
 npm start
 ```
 
@@ -13,5 +14,18 @@ or
 
 ```
 yarn
+
 yarn start
+```
+
+
+## To start gemini tests run
+```
+yarn start
+
+yarn selenium:install
+
+yarn selenium:start
+
+yarn test:gemini
 ```
