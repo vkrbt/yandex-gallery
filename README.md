@@ -19,13 +19,15 @@ yarn start
 ```
 
 
-## To start gemini tests run
-```
-yarn start
+## To lauch the gemini tests
 
-yarn selenium:install
+`yarn selenium:install`
+`yarn selenium:start`
 
-yarn selenium:start
+In another terminal:
 
-yarn test:gemini
-```
+`yarn start`
+
+In another terminal:
+
+`yarn test:gemini`
