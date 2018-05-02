@@ -6,6 +6,7 @@
 
 ```
 npm i
+
 npm start
 ```
 
@@ -13,5 +14,20 @@ or
 
 ```
 yarn
+
 yarn start
 ```
+
+
+## To lauch the gemini tests
+
+`yarn selenium:install`
+`yarn selenium:start`
+
+In another terminal:
+
+`yarn start`
+
+In another terminal:
+
+`yarn test:gemini`
